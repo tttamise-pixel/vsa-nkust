@@ -21,13 +21,13 @@
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <!-- KHU VỰC LOGO CHÍNH -->
-                <div class="relative w-14 h-14 flex-shrink-0 group cursor-pointer" onclick="triggerLogoUpload()">
-                    <img id="headerLogo" src="https://via.placeholder.com/150?text=LOGO" alt="Logo VSA NKUST" class="w-full h-full object-cover rounded-full border border-slate-200 shadow-sm">
-                    <div id="logoUploadOverlay" class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center text-white text-xs font-bold opacity-90 group-hover:opacity-100 transition-all">
-                        <i class="fa-solid fa-camera"></i>
-                    </div>
-                    <input type="file" id="logoInput" accept="image/*" class="hidden" onchange="uploadHeaderLogo(event)">
+                <!-- LOGO CHÍNH -->
+                <div class="relative w-14 h-14 flex-shrink-0 group">
+                    <img id="headerLogo" 
+                         src="https://drive.google.com/thumbnail?id=1ptezU0DRT1xZNqvV4xuSPTAXQooH6QNC&sz=w500" 
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=150';"
+                         alt="Logo VSA NKUST" 
+                         class="w-full h-full object-cover rounded-full border border-slate-200 shadow-sm">
                 </div>
 
                 <div>
@@ -58,23 +58,15 @@
                     <p class="text-blue-100 text-sm sm:text-base leading-relaxed">Xây dựng cộng đồng sinh viên Việt Nam đoàn kết, năng động và phát triển tại Trường Đại học Khoa học & Công nghệ Quốc gia Cao Hùng.</p>
                 </div>
                 
+                <!-- VIDEO HERO BANNER -->
                 <div class="lg:col-span-5 flex justify-center items-center">
                     <div class="w-full max-w-sm bg-black/20 backdrop-blur-md rounded-3xl p-3 border border-white/20 shadow-2xl relative">
-                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black/40 flex items-center justify-center">
-                            <video id="heroLogoVideo" autoplay loop muted playsinline class="w-full h-full object-cover hidden"></video>
-                            <div id="videoPlaceholder" class="text-center p-6 space-y-2">
-                                <div class="w-12 h-12 rounded-full bg-white/10 mx-auto flex items-center justify-center text-xl">
-                                    <i class="fa-solid fa-video"></i>
-                                </div>
-                                <p class="text-xs font-medium text-blue-100">Chưa có Video Logo</p>
-                            </div>
+                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center">
+                            <iframe src="https://drive.google.com/file/d/1y6HNrv9aUrR_WfBA0FKD5evF6sHW_Bby/preview" 
+                                    class="w-full h-full border-0" 
+                                    allow="autoplay">
+                            </iframe>
                         </div>
-
-                        <button id="uploadVideoBtn" onclick="document.getElementById('videoInput').click()" 
-                                class="mt-3 w-full py-2.5 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs font-bold rounded-xl transition-all border border-white/30 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-cloud-arrow-up"></i> Tải Video Logo Lên
-                        </button>
-                        <input type="file" id="videoInput" accept="video/*" class="hidden" onchange="uploadLogoVideo(event)">
                     </div>
                 </div>
             </div>
@@ -157,18 +149,12 @@
             </form>
         </section>
 
-        <!-- THƯ VIỆN HÌNH ẢNH HOẠT ĐỘNG (CÓ NÚT UPLOAD ÁNH) -->
+        <!-- THƯ VIỆN HÌNH ẢNH HOẠT ĐỘNG -->
         <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
                 <div>
                     <h3 class="text-xl font-bold text-slate-900">Hình Ảnh Hoạt Động Hội Sinh Viên NKUST</h3>
                     <p class="text-xs text-slate-500">Bộ sưu tập hình ảnh hoạt động của Hội Sinh Viên</p>
-                </div>
-                <div>
-                    <button onclick="document.getElementById('galleryInput').click()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-plus"></i> Tải Hình Lên
-                    </button>
-                    <input type="file" id="galleryInput" accept="image/*" multiple class="hidden" onchange="uploadGalleryImages(event)">
                 </div>
             </div>
 
@@ -314,19 +300,27 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // CẤU HÌNH GOOGLE SHEETS WEB APP URL
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWcPCaDbot8fwGL5zGeqqvrQm0ADVebaJM1G-MDMaQWKFCoSJhSpMxcKRpPjy-zWJ56g/exec';
 
         let studentList = [];
 
-        // Album Ảnh mặc định (sử dụng link Unsplash ổn định)
-        let galleryImages = JSON.parse(localStorage.getItem('vsa_nkust_gallery')) || [
-            { url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800", title: "Giao Lưu Sinh Viên" },
-            { url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800", title: "Hội Thảo NKUST" },
-            { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800", title: "Lễ Bảo Vệ Luận Văn" },
-            { url: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800", title: "Giải Bóng Đá VSA" },
-            { url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800", title: "Đội Bóng Đá NKUST" },
-            { url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800", title: "Sự Kiện Giáng Sinh" }
+        // DANH SÁCH ẢNH TỰ ĐỘNG CHUYỂN ĐỔI SANG THUMBNAIL CỦA GOOGLE DRIVE
+        let galleryImages = [
+            { 
+                url: "https://drive.google.com/thumbnail?id=1Str2kNZBJGRwZWS30Bd1ymOfgZnC4n2t&sz=w1000", 
+                fallback: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800",
+                title: "Giao Lưu Sinh Viên" 
+            },
+            { 
+                url: "https://drive.google.com/thumbnail?id=14jGHgutjk8UWJfKWVSStOooXGKa4AhaT&sz=w1000", 
+                fallback: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800",
+                title: "Hội Thảo NKUST" 
+            },
+            { 
+                url: "https://drive.google.com/thumbnail?id=1-ZPmm2ahbHzNmr9kSNQtipUdEwdArpy1&sz=w1000", 
+                fallback: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800",
+                title: "Lễ Bảo Vệ Luận Văn" 
+            }
         ];
 
         let isAdmin = false;
@@ -334,102 +328,24 @@
         let committeeChart = null;
 
         window.addEventListener('DOMContentLoaded', () => {
-            const savedLogo = localStorage.getItem('vsa_nkust_logo');
-            if (savedLogo) {
-                document.getElementById('headerLogo').src = savedLogo;
-                document.getElementById('logoUploadOverlay').classList.add('hidden');
-            }
-
-            const savedVideo = localStorage.getItem('vsa_nkust_video');
-            if (savedVideo) {
-                const videoElem = document.getElementById('heroLogoVideo');
-                videoElem.src = savedVideo;
-                videoElem.classList.remove('hidden');
-                document.getElementById('videoPlaceholder').classList.add('hidden');
-                document.getElementById('uploadVideoBtn').classList.add('hidden');
-            }
-
             renderGallery();
         });
-
-        // XỬ LÝ UPLOAD LOGO & VIDEO
-        function triggerLogoUpload() {
-            const savedLogo = localStorage.getItem('vsa_nkust_logo');
-            if (!savedLogo) {
-                document.getElementById('logoInput').click();
-            }
-        }
-
-        function uploadHeaderLogo(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    const imgBase64 = evt.target.result;
-                    document.getElementById('headerLogo').src = imgBase64;
-                    document.getElementById('logoUploadOverlay').classList.add('hidden');
-                    localStorage.setItem('vsa_nkust_logo', imgBase64);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function uploadLogoVideo(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    const videoBase64 = evt.target.result;
-                    const videoElem = document.getElementById('heroLogoVideo');
-                    videoElem.src = videoBase64;
-                    videoElem.classList.remove('hidden');
-                    document.getElementById('videoPlaceholder').classList.add('hidden');
-                    document.getElementById('uploadVideoBtn').classList.add('hidden');
-                    localStorage.setItem('vsa_nkust_video', videoBase64);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
 
         // XỬ LÝ ALBUM ẢNH
         function renderGallery() {
             const grid = document.getElementById('galleryGrid');
-            if (!grid) return;
+            if(!grid) return;
             grid.innerHTML = galleryImages.map((img, idx) => `
-                <div class="group relative rounded-2xl overflow-hidden shadow cursor-pointer h-36 border border-slate-100">
-                    <img src="${img.url}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" onclick="openImageModal('${img.url}')">
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2 text-xs text-white font-medium">
+                <div class="group relative rounded-2xl overflow-hidden shadow cursor-pointer h-36 border border-slate-100 bg-slate-100">
+                    <img src="${img.url}" 
+                         onerror="this.onerror=null; this.src='${img.fallback}';"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" 
+                         onclick="openImageModal(this.src)">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2 text-xs text-white font-medium pointer-events-none">
                         <span class="truncate">${img.title}</span>
-                        <button onclick="event.stopPropagation(); deleteGalleryImage(${idx})" class="w-6 h-6 rounded-full bg-rose-600/80 hover:bg-rose-600 flex items-center justify-center text-white" title="Xóa ảnh">
-                            <i class="fa-solid fa-xmark text-xs"></i>
-                        </button>
                     </div>
                 </div>
             `).join('');
-        }
-
-        function uploadGalleryImages(e) {
-            const files = Array.from(e.target.files);
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    galleryImages.unshift({
-                        url: evt.target.result,
-                        title: file.name.split('.')[0] || "Hoạt động NKUST"
-                    });
-                    localStorage.setItem('vsa_nkust_gallery', JSON.stringify(galleryImages));
-                    renderGallery();
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function deleteGalleryImage(index) {
-            if (confirm("Bạn có chắc muốn xóa hình ảnh này khỏi thư viện?")) {
-                galleryImages.splice(index, 1);
-                localStorage.setItem('vsa_nkust_gallery', JSON.stringify(galleryImages));
-                renderGallery();
-            }
         }
 
         function openImageModal(src) {
@@ -527,7 +443,7 @@
         // XÓA 1 SINH VIÊN
         async function deleteStudent(index) {
             const student = studentList[index];
-            if (confirm(`Bạn có chắc chắn muốn xóa sinh viên ${student.name} (MSSV: ${student.id}) khỏi hệ thống?`)) {
+            if (confirm(`Bạn có chắc chắn muốn xóa sinh viên ${student.name} (MSSV: ${student.id}) khỏi Google Sheet?`)) {
                 try {
                     await fetch(GOOGLE_SCRIPT_URL, {
                         method: 'POST',
@@ -540,18 +456,18 @@
                     saveAndRefresh();
                     alert(`Đã xóa thành công sinh viên ${student.name}`);
                 } catch (err) {
-                    alert('Lỗi khi xóa dữ liệu: ' + err.message);
+                    alert('Lỗi khi xóa trên Google Sheet: ' + err.message);
                 }
             }
         }
 
-        // XÓA TOÀN BỘ DỮ LIỆU
+        // XÓA TOÀN BỘ
         async function clearAllData() {
             if (studentList.length === 0) {
                 alert("Danh sách hiện đang trống!");
                 return;
             }
-            if (confirm("CẢNH BÁO NGUY HIỂM: Bạn có chắc chắn muốn XÓA TOÀN BỘ dữ liệu? Dữ liệu bị xóa sẽ không thể phục hồi!")) {
+            if (confirm("CẢNH BÁO NGUY HIỂM: Bạn có chắc chắn muốn XÓA TOÀN BỘ dữ liệu trên Google Sheet? Dữ liệu bị xóa sẽ không thể phục hồi!")) {
                 try {
                     await fetch(GOOGLE_SCRIPT_URL, {
                         method: 'POST',
@@ -562,9 +478,9 @@
 
                     studentList = [];
                     saveAndRefresh();
-                    alert("Đã xóa toàn bộ dữ liệu thành công!");
+                    alert("Đã xóa toàn bộ dữ liệu trên Google Sheet thành công!");
                 } catch (err) {
-                    alert('Lỗi khi xóa dữ liệu: ' + err.message);
+                    alert('Lỗi khi xóa dữ liệu trên Google Sheet: ' + err.message);
                 }
             }
         }
