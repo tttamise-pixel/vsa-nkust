@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hội Sinh Viên Việt Nam tại NKUST - Ứng Cử & Bình Chọn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .bg-vsa-blue { background-color: #0d47a1; }
+        .text-vsa-blue { color: #0d47a1; }
+        .hero-gradient { background: linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #00838f 100%); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <!-- KHU VỰC LOGO CHÍNH -->
+                <div class="relative w-14 h-14 flex-shrink-0 group cursor-pointer" onclick="triggerLogoUpload()">
+                    <img id="headerLogo" src="https://via.placeholder.com/150?text=LOGO" alt="Logo VSA NKUST" class="w-full h-full object-cover rounded-full border border-slate-200 shadow-sm">
+                    <div id="logoUploadOverlay" class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center text-white text-xs font-bold opacity-90 group-hover:opacity-100 transition-all">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <input type="file" id="logoInput" accept="image/*" class="hidden" onchange="uploadHeaderLogo(event)">
+                </div>
+
+                <div>
+                    <h1 class="font-extrabold text-lg sm:text-xl text-slate-900 leading-tight tracking-tight">HỘI SINH VIÊN VIỆT NAM TẠI NKUST</h1>
+                    <p class="text-xs text-emerald-700 font-bold tracking-wider">VSA NKUST - VIETNAMESE STUDENT ASSOCIATION</p>
+                </div>
+            </div>
+
+            <!-- NÚT CHUYỂN CHẾ ĐỘ SINH VIÊN / QUẢN TRỊ VIÊN -->
+            <div class="flex items-center space-x-3">
+                <button id="toggleModeBtn" onclick="handleModeSwitch()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border flex items-center gap-2 bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>Chế độ: Sinh viên</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+        <!-- HERO BANNER -->
+        <section class="hero-gradient rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                <div class="lg:col-span-7 space-y-4">
+                    <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold tracking-wide uppercase">Nhiệm kỳ 2026 - 2027</span>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight">ỨNG CỬ VÀ BÌNH CHỌN BAN CHẤP HÀNH HỘI SINH VIÊN VIỆT NAM TẠI NKUST</h2>
+                    <p class="text-blue-100 text-sm sm:text-base leading-relaxed">Xây dựng cộng đồng sinh viên Việt Nam đoàn kết, năng động và phát triển tại Trường Đại học Khoa học & Công nghệ Quốc gia Cao Hùng.</p>
+                </div>
+                
+                <div class="lg:col-span-5 flex justify-center items-center">
+                    <div class="w-full max-w-sm bg-black/20 backdrop-blur-md rounded-3xl p-3 border border-white/20 shadow-2xl relative">
+                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black/40 flex items-center justify-center">
+                            <video id="heroLogoVideo" autoplay loop muted playsinline class="w-full h-full object-cover hidden"></video>
+                            <div id="videoPlaceholder" class="text-center p-6 space-y-2">
+                                <div class="w-12 h-12 rounded-full bg-white/10 mx-auto flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-video"></i>
+                                </div>
+                                <p class="text-xs font-medium text-blue-100">Chưa có Video Logo</p>
+                            </div>
+                        </div>
+
+                        <button id="uploadVideoBtn" onclick="document.getElementById('videoInput').click()" 
+                                class="mt-3 w-full py-2.5 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs font-bold rounded-xl transition-all border border-white/30 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Tải Video Logo Lên
+                        </button>
+                        <input type="file" id="videoInput" accept="video/*" class="hidden" onchange="uploadLogoVideo(event)">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORM ĐĂNG KÝ (KHU VỰC SINH VIÊN) -->
+        <section id="studentFormSection" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                <div class="w-10 h-10 rounded-2xl bg-blue-50 text-vsa-blue flex items-center justify-center font-bold text-lg">1</div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Xác Nhận Thông Tin Sinh Viên & Ứng Cử / Bầu Chọn</h3>
+                    <p class="text-xs text-slate-500">Sinh viên điền chính xác thông tin để được ghi nhận vào Danh sách Ban Chấp Hành NKUST</p>
+                </div>
+            </div>
+
+            <form id="studentRegistrationForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Họ và Tên Sinh Viên <span class="text-red-500">*</span></label>
+                        <input type="text" id="fullName" required placeholder="Ví dụ: Nguyễn Văn A" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Mã Số Sinh Viên (MSSV) <span class="text-red-500">*</span></label>
+                        <input type="text" id="studentId" required placeholder="Ví dụ: C110123456" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Khoa / Lớp Học <span class="text-red-500">*</span></label>
+                        <input type="text" id="department" required placeholder="Ví dụ: Quản trị Kinh doanh / CNTT" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Email <span class="text-red-500">*</span></label>
+                        <input type="email" id="email" required placeholder="Ví dụ: example@nkust.edu.tw" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all">
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 space-y-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">
+                            2. Ứng Cử / Bình Chọn Chức Danh Lãnh Đạo <span class="text-red-500">*</span>
+                        </label>
+                        <select id="leadershipRole" onchange="handleLeadershipChange()" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
+                            <option value="Không">Không ứng cử chức danh lãnh đạo (Chỉ tham gia phân ban/thành viên)</option>
+                            <option value="Chủ Tịch Hội Sinh Viên Việt Nam Tại NKUST">Chủ Tịch Hội Sinh Viên Việt Nam Tại NKUST</option>
+                            <option value="Trưởng Phân Ban Sự Kiện">Trưởng Phân Ban Sự Kiện</option>
+                            <option value="Trưởng Phân Ban Hậu Cần">Trưởng Phân Ban Hậu Cần</option>
+                            <option value="Trưởng Phân Ban Truyền Thông">Trưởng Phân Ban Truyền Thông</option>
+                        </select>
+                    </div>
+
+                    <div id="subCommitteeSection" class="transition-all duration-300">
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">
+                            3. Ứng Cử / Tham Gia Thành Viên Các Phân Ban <span class="text-red-500">*</span>
+                        </label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer">
+                                <input type="radio" name="committee" value="Sự kiện" checked class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                <span class="ml-2 text-sm font-medium text-slate-700">Phân Ban Sự Kiện</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer">
+                                <input type="radio" name="committee" value="Hậu cần" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                <span class="ml-2 text-sm font-medium text-slate-700">Phân Ban Hậu Cần</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer">
+                                <input type="radio" name="committee" value="Truyền thông" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                <span class="ml-2 text-sm font-medium text-slate-700">Phân Ban Truyền Thông</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer">
+                                <input type="radio" name="committee" value="Thành viên tự do" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                <span class="ml-2 text-sm font-medium text-slate-700">Thành viên tự do</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                    <button type="submit" class="px-8 py-3 bg-vsa-blue hover:bg-blue-800 text-white font-semibold rounded-xl shadow-lg transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Gửi Xác Nhận Thông Tin
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- THƯ VIỆN HÌNH ẢNH HOẠT ĐỘNG (CÓ NÚT UPLOAD ÁNH) -->
+        <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Hình Ảnh Hoạt Động Hội Sinh Viên NKUST</h3>
+                    <p class="text-xs text-slate-500">Bộ sưu tập hình ảnh hoạt động của Hội Sinh Viên</p>
+                </div>
+                <div>
+                    <button onclick="document.getElementById('galleryInput').click()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Tải Hình Lên
+                    </button>
+                    <input type="file" id="galleryInput" accept="image/*" multiple class="hidden" onchange="uploadGalleryImages(event)">
+                </div>
+            </div>
+
+            <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- JS Render Album Ảnh -->
+            </div>
+        </section>
+
+        <!-- KHU VỰC QUẢN TRỊ VIÊN (ADMIN AREA) -->
+        <div id="adminArea" class="hidden space-y-10">
+            <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-between text-amber-900 text-sm">
+                <span class="font-medium"><i class="fa-solid fa-user-shield mr-2"></i> Quyền Quản Trị Viên (Admin) đã bật.</span>
+                <button onclick="logoutAdmin()" class="text-xs font-semibold underline text-amber-800 hover:text-amber-950">Chuyển về Chế độ Sinh viên</button>
+            </div>
+
+            <!-- THỐNG KÊ OVERVIEW -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-vsa-blue flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-users"></i></div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-semibold">Tổng Sinh Viên BCH</p>
+                        <h4 id="statTotal" class="text-2xl font-black text-slate-900">0</h4>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-crown"></i></div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-semibold">Ứng Cử Lãnh Đạo</p>
+                        <h4 id="statLeaders" class="text-2xl font-black text-slate-900">0</h4>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-layer-group"></i></div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-semibold">Thành Viên Phân Ban</p>
+                        <h4 id="statMembers" class="text-2xl font-black text-slate-900">0</h4>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-chart-pie"></i></div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-semibold">Tỷ Lệ Thành Viên</p>
+                        <h4 id="statRatio" class="text-2xl font-black text-slate-900">0%</h4>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BIỂU ĐỒ THỐNG KÊ -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-bar text-vsa-blue"></i> Thống Kê Ứng Cử Lãnh Đạo
+                    </h4>
+                    <div class="h-64">
+                        <canvas id="leadershipChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-emerald-600"></i> Phân Bổ Thành Viên Các Phân Ban
+                    </h4>
+                    <div class="h-64">
+                        <canvas id="committeeChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DANH SÁCH BAN CHẤP HÀNH -->
+            <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Danh Sách Ban Chấp Hành (BCH) Hội Sinh Viên NKUST</h3>
+                        <p class="text-xs text-slate-500">Dữ liệu được đồng bộ trực tiếp từ Google Sheets</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="fetchStudentsFromGoogleSheet()" class="px-3 py-2 text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate"></i> Tải lại dữ liệu
+                        </button>
+                        <button onclick="clearAllData()" class="px-3 py-2 text-xs font-semibold bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-trash-can"></i> Xóa Tất Cả Kết Quả
+                        </button>
+                        <button onclick="exportCSV()" class="px-3 py-2 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-csv"></i> Xuất CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase bg-slate-50/50">
+                                <th class="p-3">MSSV</th>
+                                <th class="p-3">Họ và Tên</th>
+                                <th class="p-3">Khoa / Lớp</th>
+                                <th class="p-3">Chức Danh Lãnh Đạo</th>
+                                <th class="p-3">Phân Ban</th>
+                                <th class="p-3">Email</th>
+                                <th class="p-3 text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody" class="text-sm divide-y divide-slate-100">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
+            <p class="font-semibold text-slate-700">HỘI SINH VIÊN VIỆT NAM TẠI TRƯỜNG ĐẠI HỌC KHOA HỌC & CÔNG NGHỆ QUỐC GIA CAO HÙNG (NKUST)</p>
+            <p>© Nhiệm kỳ 2026 - 2027. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL PHÓNG TO HÌNH ẢNH -->
+    <div id="imageModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden p-4" onclick="closeImageModal()">
+        <div class="relative max-w-4xl w-full">
+            <img id="modalImg" src="" class="max-h-[85vh] mx-auto rounded-2xl shadow-2xl object-contain">
+            <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white text-2xl"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+    </div>
+
+    <!-- MODAL ĐĂNG NHẬP ADMIN (ĐÃ ẨN GỢI Ý MẬT KHẨU) -->
+    <div id="adminModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
+            <button onclick="toggleAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="text-center space-y-2 mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-vsa-blue mx-auto flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-user-lock"></i></div>
+                <h3 class="text-xl font-bold text-slate-900">Đăng Nhập Quản Trị Viên</h3>
+                <p class="text-xs text-slate-500">Vui lòng nhập mật khẩu xác thực để tiếp tục</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Mật khẩu Admin</label>
+                    <input type="password" id="adminPassword" placeholder="••••••••" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                </div>
+                <button type="submit" class="w-full py-3 bg-vsa-blue text-white font-semibold rounded-xl hover:bg-blue-800 transition-all shadow-md">Đăng Nhập</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // CẤU HÌNH GOOGLE SHEETS WEB APP URL
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWcPCaDbot8fwGL5zGeqqvrQm0ADVebaJM1G-MDMaQWKFCoSJhSpMxcKRpPjy-zWJ56g/exec';
+
+        let studentList = [];
+
+        // Album Ảnh mặc định (sử dụng link Unsplash ổn định)
+        let galleryImages = JSON.parse(localStorage.getItem('vsa_nkust_gallery')) || [
+            { url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800", title: "Giao Lưu Sinh Viên" },
+            { url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800", title: "Hội Thảo NKUST" },
+            { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800", title: "Lễ Bảo Vệ Luận Văn" },
+            { url: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800", title: "Giải Bóng Đá VSA" },
+            { url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800", title: "Đội Bóng Đá NKUST" },
+            { url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800", title: "Sự Kiện Giáng Sinh" }
+        ];
+
+        let isAdmin = false;
+        let leadershipChart = null;
+        let committeeChart = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLogo = localStorage.getItem('vsa_nkust_logo');
+            if (savedLogo) {
+                document.getElementById('headerLogo').src = savedLogo;
+                document.getElementById('logoUploadOverlay').classList.add('hidden');
+            }
+
+            const savedVideo = localStorage.getItem('vsa_nkust_video');
+            if (savedVideo) {
+                const videoElem = document.getElementById('heroLogoVideo');
+                videoElem.src = savedVideo;
+                videoElem.classList.remove('hidden');
+                document.getElementById('videoPlaceholder').classList.add('hidden');
+                document.getElementById('uploadVideoBtn').classList.add('hidden');
+            }
+
+            renderGallery();
+        });
+
+        // XỬ LÝ UPLOAD LOGO & VIDEO
+        function triggerLogoUpload() {
+            const savedLogo = localStorage.getItem('vsa_nkust_logo');
+            if (!savedLogo) {
+                document.getElementById('logoInput').click();
+            }
+        }
+
+        function uploadHeaderLogo(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const imgBase64 = evt.target.result;
+                    document.getElementById('headerLogo').src = imgBase64;
+                    document.getElementById('logoUploadOverlay').classList.add('hidden');
+                    localStorage.setItem('vsa_nkust_logo', imgBase64);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function uploadLogoVideo(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const videoBase64 = evt.target.result;
+                    const videoElem = document.getElementById('heroLogoVideo');
+                    videoElem.src = videoBase64;
+                    videoElem.classList.remove('hidden');
+                    document.getElementById('videoPlaceholder').classList.add('hidden');
+                    document.getElementById('uploadVideoBtn').classList.add('hidden');
+                    localStorage.setItem('vsa_nkust_video', videoBase64);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // XỬ LÝ ALBUM ẢNH
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = galleryImages.map((img, idx) => `
+                <div class="group relative rounded-2xl overflow-hidden shadow cursor-pointer h-36 border border-slate-100">
+                    <img src="${img.url}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" onclick="openImageModal('${img.url}')">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2 text-xs text-white font-medium">
+                        <span class="truncate">${img.title}</span>
+                        <button onclick="event.stopPropagation(); deleteGalleryImage(${idx})" class="w-6 h-6 rounded-full bg-rose-600/80 hover:bg-rose-600 flex items-center justify-center text-white" title="Xóa ảnh">
+                            <i class="fa-solid fa-xmark text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function uploadGalleryImages(e) {
+            const files = Array.from(e.target.files);
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    galleryImages.unshift({
+                        url: evt.target.result,
+                        title: file.name.split('.')[0] || "Hoạt động NKUST"
+                    });
+                    localStorage.setItem('vsa_nkust_gallery', JSON.stringify(galleryImages));
+                    renderGallery();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function deleteGalleryImage(index) {
+            if (confirm("Bạn có chắc muốn xóa hình ảnh này khỏi thư viện?")) {
+                galleryImages.splice(index, 1);
+                localStorage.setItem('vsa_nkust_gallery', JSON.stringify(galleryImages));
+                renderGallery();
+            }
+        }
+
+        function openImageModal(src) {
+            document.getElementById('modalImg').src = src;
+            document.getElementById('imageModal').classList.remove('hidden');
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+        }
+
+        // FORM ĐĂNG KÝ
+        function handleLeadershipChange() {
+            const leadershipVal = document.getElementById('leadershipRole').value;
+            const subCommitteeSec = document.getElementById('subCommitteeSection');
+            if (leadershipVal !== "Không") {
+                subCommitteeSec.classList.add('opacity-40', 'pointer-events-none');
+            } else {
+                subCommitteeSec.classList.remove('opacity-40', 'pointer-events-none');
+            }
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
+
+            const name = document.getElementById('fullName').value.trim();
+            const id = document.getElementById('studentId').value.trim();
+            const department = document.getElementById('department').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const leadership = document.getElementById('leadershipRole').value;
+            
+            let committee = "Ban Điều Hành";
+            if (leadership === "Không") {
+                committee = document.querySelector('input[name="committee"]:checked').value;
+            }
+
+            const payload = { id, name, department, email, leadership, committee };
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                alert('Xác nhận thông tin sinh viên thành công và đã lưu vào hệ thống!');
+                document.getElementById('studentRegistrationForm').reset();
+                handleLeadershipChange();
+                
+                if (isAdmin) {
+                    fetchStudentsFromGoogleSheet();
+                }
+            } catch (err) {
+                alert('Có lỗi xảy ra khi gửi dữ liệu: ' + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Gửi Xác Nhận Thông Tin';
+            }
+        }
+
+        // ĐỒNG BỘ DỮ LIỆU TỪ GOOGLE SHEETS
+async function fetchStudentsFromGoogleSheet() {
+    const tbody = document.getElementById('studentTableBody');
+    if (tbody) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang tải dữ liệu từ Google Sheet...</td></tr>`;
+    }
+
+    try {
+        // Thêm redirect: 'follow' để tự động đi theo liên kết chuyển hướng của Google
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'GET',
+            redirect: 'follow'
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Lỗi kết nối HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        studentList = data;
+        saveAndRefresh();
+    } catch (err) {
+        console.error('Không thể lấy dữ liệu từ Google Sheet:', err);
+        if (tbody) {
+            tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-rose-500 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Không thể tải dữ liệu. Vui lòng kiểm tra lại cấu hình Google Apps Script hoặc quyền truy cập.</td></tr>`;
+        }
+    }
+}
+
+        function clearAllData() {
+            if (studentList.length === 0) {
+                alert("Danh sách hiện đang trống!");
+                return;
+            }
+            if (confirm("CẢNH BÁO: Bạn có chắc chắn muốn xóa toàn bộ giao diện bảng này?")) {
+                studentList = [];
+                saveAndRefresh();
+            }
+        }
+
+        function saveAndRefresh() {
+            if (isAdmin) {
+                renderTable();
+                updateStats();
+                updateCharts();
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('studentTableBody');
+            if (studentList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 italic">Chưa có dữ liệu sinh viên nào.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = studentList.map((st, index) => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-3 font-mono font-semibold text-blue-700">${st.id}</td>
+                    <td class="p-3 font-medium text-slate-900">${st.name}</td>
+                    <td class="p-3 text-slate-600">${st.department}</td>
+                    <td class="p-3">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${st.leadership !== 'Không' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}">
+                            ${st.leadership}
+                        </span>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                            ${st.committee}
+                        </span>
+                    </td>
+                    <td class="p-3 text-slate-500 text-xs">${st.email}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteStudent(${index})" title="Xóa sinh viên này" class="w-8 h-8 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-all inline-flex items-center justify-center">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').innerText = studentList.length;
+            const leaders = studentList.filter(s => s.leadership !== 'Không').length;
+            document.getElementById('statLeaders').innerText = leaders;
+            const members = studentList.filter(s => s.leadership === 'Không').length;
+            document.getElementById('statMembers').innerText = members;
+            const ratio = studentList.length ? Math.round((members / studentList.length) * 100) : 0;
+            document.getElementById('statRatio').innerText = ratio + '%';
+        }
+
+        function updateCharts() {
+            const leaderCounts = {
+                "Chủ Tịch": studentList.filter(s => s.leadership.includes('Chủ Tịch')).length,
+                "TR.Sự Kiện": studentList.filter(s => s.leadership.includes('Sự Kiện')).length,
+                "TR.Hậu Cần": studentList.filter(s => s.leadership.includes('Hậu Cần')).length,
+                "TR.Truyền Thông": studentList.filter(s => s.leadership.includes('Truyền Thông')).length,
+            };
+
+            if (leadershipChart) leadershipChart.destroy();
+            leadershipChart = new Chart(document.getElementById('leadershipChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(leaderCounts),
+                    datasets: [{ label: 'Số ứng viên', data: Object.values(leaderCounts), backgroundColor: '#0d47a1', borderRadius: 8 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            const committeeCounts = {
+                "Sự kiện": studentList.filter(s => s.committee === 'Sự kiện').length,
+                "Hậu cần": studentList.filter(s => s.committee === 'Hậu cần').length,
+                "Truyền thông": studentList.filter(s => s.committee === 'Truyền thông').length,
+                "Tự do": studentList.filter(s => s.committee === 'Thành viên tự do').length,
+                "BĐH": studentList.filter(s => s.committee === 'Ban Điều Hành').length,
+            };
+
+            if (committeeChart) committeeChart.destroy();
+            committeeChart = new Chart(document.getElementById('committeeChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(committeeCounts),
+                    datasets: [{ data: Object.values(committeeCounts), backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#64748b'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // CHUYỂN ĐỔI CHẾ ĐỘ SINH VIÊN / ADMIN
+        function handleModeSwitch() {
+            if (isAdmin) {
+                logoutAdmin();
+            } else {
+                toggleAdminModal();
+            }
+        }
+
+        function toggleAdminModal() {
+            document.getElementById('adminModal').classList.toggle('hidden');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === 'admin123') {
+                isAdmin = true;
+                
+                fetchStudentsFromGoogleSheet();
+
+                document.getElementById('adminArea').classList.remove('hidden');
+                document.getElementById('toggleModeBtn').innerHTML = `<i class="fa-solid fa-user-shield"></i> <span>Chế độ: Quản trị viên</span>`;
+                document.getElementById('toggleModeBtn').className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border flex items-center gap-2 bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200`;
+                
+                toggleAdminModal();
+                document.getElementById('adminPassword').value = '';
+            } else {
+                alert('Mật khẩu Admin không chính xác!');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdmin = false;
+            document.getElementById('adminArea').classList.add('hidden');
+            document.getElementById('toggleModeBtn').innerHTML = `<i class="fa-solid fa-user-graduate"></i> <span>Chế độ: Sinh viên</span>`;
+            document.getElementById('toggleModeBtn').className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border flex items-center gap-2 bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100`;
+        }
+
+        function exportCSV() {
+            if (studentList.length === 0) {
+                alert("Không có dữ liệu để xuất CSV!");
+                return;
+            }
+            let csv = 'MSSV,Họ và Tên,Khoa Ngành,Chức Danh Lãnh Đạo,Phân Ban,Email\n';
+            studentList.forEach(s => {
+                csv += `"${s.id}","${s.name}","${s.department}","${s.leadership}","${s.committee}","${s.email}"\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Danh_Sach_BCH_VSA_NKUST.csv';
+            link.click();
+        }
+    </script>
+</body>
+</html>
