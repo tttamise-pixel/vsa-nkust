@@ -293,7 +293,7 @@
         </div>
     </div>
 
-    <!-- MODAL ĐĂNG NHẬP ADMIN (ĐÃ ẨN GỢI Ý MẬT KHẨU) -->
+    <!-- MODAL ĐĂNG NHẬP ADMIN -->
     <div id="adminModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
             <button onclick="toggleAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -394,6 +394,7 @@
         // XỬ LÝ ALBUM ẢNH
         function renderGallery() {
             const grid = document.getElementById('galleryGrid');
+            if (!grid) return;
             grid.innerHTML = galleryImages.map((img, idx) => `
                 <div class="group relative rounded-2xl overflow-hidden shadow cursor-pointer h-36 border border-slate-100">
                     <img src="${img.url}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" onclick="openImageModal('${img.url}')">
@@ -466,7 +467,8 @@
             
             let committee = "Ban Điều Hành";
             if (leadership === "Không") {
-                committee = document.querySelector('input[name="committee"]:checked').value;
+                const selectedRadio = document.querySelector('input[name="committee"]:checked');
+                committee = selectedRadio ? selectedRadio.value : "Thành viên tự do";
             }
 
             const payload = { id, name, department, email, leadership, committee };
@@ -522,10 +524,10 @@
             }
         }
 
-        // HÀM XÓA 1 SINH VIÊN (XÓA CẢ WEB VÀ GOOGLE SHEET)
+        // XÓA 1 SINH VIÊN
         async function deleteStudent(index) {
             const student = studentList[index];
-            if (confirm(`Bạn có chắc chắn muốn xóa sinh viên ${student.name} (MSSV: ${student.id}) khỏi cả Google Sheet?`)) {
+            if (confirm(`Bạn có chắc chắn muốn xóa sinh viên ${student.name} (MSSV: ${student.id}) khỏi hệ thống?`)) {
                 try {
                     await fetch(GOOGLE_SCRIPT_URL, {
                         method: 'POST',
@@ -538,18 +540,18 @@
                     saveAndRefresh();
                     alert(`Đã xóa thành công sinh viên ${student.name}`);
                 } catch (err) {
-                    alert('Lỗi khi xóa trên Google Sheet: ' + err.message);
+                    alert('Lỗi khi xóa dữ liệu: ' + err.message);
                 }
             }
         }
 
-        // HÀM XÓA TOÀN BỘ (XÓA CẢ WEB VÀ GOOGLE SHEET)
+        // XÓA TOÀN BỘ DỮ LIỆU
         async function clearAllData() {
             if (studentList.length === 0) {
                 alert("Danh sách hiện đang trống!");
                 return;
             }
-            if (confirm("CẢNH BÁO NGUY HIỂM: Bạn có chắc chắn muốn XÓA TOÀN BỘ dữ liệu trên cả Google Sheet? Dữ liệu bị xóa sẽ không thể phục hồi!")) {
+            if (confirm("CẢNH BÁO NGUY HIỂM: Bạn có chắc chắn muốn XÓA TOÀN BỘ dữ liệu? Dữ liệu bị xóa sẽ không thể phục hồi!")) {
                 try {
                     await fetch(GOOGLE_SCRIPT_URL, {
                         method: 'POST',
@@ -560,9 +562,9 @@
 
                     studentList = [];
                     saveAndRefresh();
-                    alert("Đã xóa toàn bộ dữ liệu trên Google Sheet thành công!");
+                    alert("Đã xóa toàn bộ dữ liệu thành công!");
                 } catch (err) {
-                    alert('Lỗi khi xóa dữ liệu trên Google Sheet: ' + err.message);
+                    alert('Lỗi khi xóa dữ liệu: ' + err.message);
                 }
             }
         }
@@ -577,26 +579,27 @@
 
         function renderTable() {
             const tbody = document.getElementById('studentTableBody');
+            if (!tbody) return;
             if (studentList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 italic">Chưa có dữ liệu sinh viên nào.</td></tr>`;
                 return;
             }
             tbody.innerHTML = studentList.map((st, index) => `
                 <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="p-3 font-mono font-semibold text-blue-700">${st.id}</td>
-                    <td class="p-3 font-medium text-slate-900">${st.name}</td>
-                    <td class="p-3 text-slate-600">${st.department}</td>
+                    <td class="p-3 font-mono font-semibold text-blue-700">${st.id || ''}</td>
+                    <td class="p-3 font-medium text-slate-900">${st.name || ''}</td>
+                    <td class="p-3 text-slate-600">${st.department || ''}</td>
                     <td class="p-3">
-                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${st.leadership !== 'Không' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}">
-                            ${st.leadership}
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${st.leadership && st.leadership !== 'Không' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}">
+                            ${st.leadership || 'Không'}
                         </span>
                     </td>
                     <td class="p-3">
                         <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-                            ${st.committee}
+                            ${st.committee || ''}
                         </span>
                     </td>
-                    <td class="p-3 text-slate-500 text-xs">${st.email}</td>
+                    <td class="p-3 text-slate-500 text-xs">${st.email || ''}</td>
                     <td class="p-3 text-center">
                         <button onclick="deleteStudent(${index})" title="Xóa sinh viên này" class="w-8 h-8 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-all inline-flex items-center justify-center">
                             <i class="fa-regular fa-trash-can"></i>
@@ -608,9 +611,9 @@
 
         function updateStats() {
             document.getElementById('statTotal').innerText = studentList.length;
-            const leaders = studentList.filter(s => s.leadership !== 'Không').length;
+            const leaders = studentList.filter(s => s.leadership && s.leadership !== 'Không').length;
             document.getElementById('statLeaders').innerText = leaders;
-            const members = studentList.filter(s => s.leadership === 'Không').length;
+            const members = studentList.filter(s => !s.leadership || s.leadership === 'Không').length;
             document.getElementById('statMembers').innerText = members;
             const ratio = studentList.length ? Math.round((members / studentList.length) * 100) : 0;
             document.getElementById('statRatio').innerText = ratio + '%';
@@ -618,21 +621,24 @@
 
         function updateCharts() {
             const leaderCounts = {
-                "Chủ Tịch": studentList.filter(s => s.leadership.includes('Chủ Tịch')).length,
-                "TR.Sự Kiện": studentList.filter(s => s.leadership.includes('Sự Kiện')).length,
-                "TR.Hậu Cần": studentList.filter(s => s.leadership.includes('Hậu Cần')).length,
-                "TR.Truyền Thông": studentList.filter(s => s.leadership.includes('Truyền Thông')).length,
+                "Chủ Tịch": studentList.filter(s => s.leadership && s.leadership.includes('Chủ Tịch')).length,
+                "TR.Sự Kiện": studentList.filter(s => s.leadership && s.leadership.includes('Sự Kiện')).length,
+                "TR.Hậu Cần": studentList.filter(s => s.leadership && s.leadership.includes('Hậu Cần')).length,
+                "TR.Truyền Thông": studentList.filter(s => s.leadership && s.leadership.includes('Truyền Thông')).length,
             };
 
             if (leadershipChart) leadershipChart.destroy();
-            leadershipChart = new Chart(document.getElementById('leadershipChart'), {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(leaderCounts),
-                    datasets: [{ label: 'Số ứng viên', data: Object.values(leaderCounts), backgroundColor: '#0d47a1', borderRadius: 8 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
+            const ctx1 = document.getElementById('leadershipChart');
+            if (ctx1) {
+                leadershipChart = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(leaderCounts),
+                        datasets: [{ label: 'Số ứng viên', data: Object.values(leaderCounts), backgroundColor: '#0d47a1', borderRadius: 8 }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+            }
 
             const committeeCounts = {
                 "Sự kiện": studentList.filter(s => s.committee === 'Sự kiện').length,
@@ -643,14 +649,17 @@
             };
 
             if (committeeChart) committeeChart.destroy();
-            committeeChart = new Chart(document.getElementById('committeeChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(committeeCounts),
-                    datasets: [{ data: Object.values(committeeCounts), backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#64748b'] }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
+            const ctx2 = document.getElementById('committeeChart');
+            if (ctx2) {
+                committeeChart = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(committeeCounts),
+                        datasets: [{ data: Object.values(committeeCounts), backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#64748b'] }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+            }
         }
 
         function handleModeSwitch() {
@@ -698,7 +707,7 @@
             }
             let csv = 'MSSV,Họ và Tên,Khoa Ngành,Chức Danh Lãnh Đạo,Phân Ban,Email\n';
             studentList.forEach(s => {
-                csv += `"${s.id}","${s.name}","${s.department}","${s.leadership}","${s.committee}","${s.email}"\n`;
+                csv += `"${s.id || ''}","${s.name || ''}","${s.department || ''}","${s.leadership || ''}","${s.committee || ''}","${s.email || ''}"\n`;
             });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
