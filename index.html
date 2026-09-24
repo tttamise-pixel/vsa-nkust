@@ -34,7 +34,6 @@
                 </div>
             </div>
 
-            <!-- NÚT BẬT TẮT CHẾ ĐỘ ADMIN -->
             <div class="flex items-center space-x-3">
                 <button id="toggleModeBtn" onclick="handleModeSwitch()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border flex items-center gap-2 bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100">
                     <i class="fa-solid fa-user-graduate"></i>
@@ -57,13 +56,11 @@
                 </div>
                 
                 <div class="lg:col-span-5 flex justify-center items-center">
-                    <div class="w-full max-w-sm bg-black/20 backdrop-blur-md rounded-3xl p-3 border border-white/20 shadow-2xl relative">
-                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center">
-                            <iframe src="https://drive.google.com/file/d/1y6HNrv9aUrR_WfBA0FKD5evF6sHW_Bby/preview" 
-                                    class="w-full h-full border-0" 
-                                    allow="autoplay">
-                            </iframe>
-                        </div>
+                    <div class="w-48 h-48 sm:w-56 sm:h-56 bg-white/10 backdrop-blur-md rounded-full p-3 border-2 border-white/30 shadow-2xl flex items-center justify-center">
+                        <img src="https://drive.google.com/thumbnail?id=1ptezU0DRT1xZNqvV4xuSPTAXQooH6QNC&sz=w1000" 
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500';"
+                             alt="Logo VSA NKUST Large" 
+                             class="w-full h-full object-cover rounded-full shadow-inner border-2 border-white/50">
                     </div>
                 </div>
             </div>
@@ -121,7 +118,6 @@
                         </select>
                     </div>
 
-                    <!-- VÙNG CHỌN PHÂN BAN -->
                     <div id="committeeContainer" class="space-y-2 transition-all">
                         <label class="block text-xs font-semibold text-slate-700 uppercase">
                             Đăng Ký Thành Viên Phân Ban <span id="committeeLockNote" class="text-amber-600 font-normal lowercase italic"></span>
@@ -157,8 +153,6 @@
 
         <!-- TAB 2: CỔNG BẦU CHỌN & KẾT QUẢ -->
         <div id="tab2Content" class="hidden space-y-8">
-            
-            <!-- SECTION BỎ PHIẾU BẦU CHỌN -->
             <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-8">
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100">
                     <div class="flex items-center gap-3">
@@ -176,7 +170,6 @@
                 <form onsubmit="handleVoteSubmit(event)" class="space-y-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                        <!-- CHỦ TỊCH -->
                         <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
                             <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
                                 <i class="fa-solid fa-crown text-amber-500"></i> Chủ Tịch Hội Sinh Viên
@@ -186,7 +179,6 @@
                             </div>
                         </div>
 
-                        <!-- TRUYỀN THÔNG -->
                         <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
                             <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
                                 <i class="fa-solid fa-bullhorn text-purple-500"></i> Trưởng Phân Ban Truyền Thông
@@ -196,7 +188,6 @@
                             </div>
                         </div>
 
-                        <!-- SỰ KIỆN -->
                         <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
                             <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
                                 <i class="fa-solid fa-calendar-star text-blue-500"></i> Trưởng Phân Ban Sự Kiện
@@ -206,7 +197,6 @@
                             </div>
                         </div>
 
-                        <!-- HẬU CẦN -->
                         <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
                             <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
                                 <i class="fa-solid fa-boxes-packing text-emerald-500"></i> Trưởng Phân Ban Hậu Cần
@@ -234,7 +224,6 @@
                 </form>
             </section>
 
-            <!-- SECTION KẾT QUẢ BÌNH CHỌN 4 VI TRỊ (DẠNG BIỂU ĐỒ CỘT DỄ NHÌN) -->
             <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-8">
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100">
                     <div class="flex items-center gap-3">
@@ -249,9 +238,7 @@
                     </button>
                 </div>
 
-                <!-- LƯỚI BIỂU ĐỒ CỘT 4 CHỨC VỤ LÃNH ĐẠO -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- 1. CHỦ TỊCH -->
                     <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
                         <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
                             <i class="fa-solid fa-crown text-amber-500"></i> Biểu Đồ Bình Chọn Chủ Tịch
@@ -259,7 +246,6 @@
                         <div class="h-64"><canvas id="chartPresident"></canvas></div>
                     </div>
 
-                    <!-- 2. TRƯỜNG PHÂN BAN TRUYỀN THÔNG -->
                     <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
                         <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
                             <i class="fa-solid fa-bullhorn text-purple-500"></i> Biểu Đồ Bình Chọn Trưởng Phân Ban Truyền Thông
@@ -267,7 +253,6 @@
                         <div class="h-64"><canvas id="chartMedia"></canvas></div>
                     </div>
 
-                    <!-- 3. TRƯỜNG PHÂN BAN SỰ KIỆN -->
                     <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
                         <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
                             <i class="fa-solid fa-calendar-star text-blue-500"></i> Biểu Đồ Bình Chọn Trưởng Phân Ban Sự Kiện
@@ -275,7 +260,6 @@
                         <div class="h-64"><canvas id="chartEvent"></canvas></div>
                     </div>
 
-                    <!-- 4. TRƯỜNG PHÂN BAN HẬU CẦN -->
                     <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
                         <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
                             <i class="fa-solid fa-boxes-packing text-emerald-500"></i> Biểu Đồ Bình Chọn Trưởng Phân Ban Hậu Cần
@@ -302,11 +286,14 @@
                         <p class="text-xs text-slate-500">Dữ liệu được đồng bộ trực tiếp từ Google Sheets (Giai đoạn 1)</p>
                     </div>
                     <div class="flex items-center gap-2">
+                        <button onclick="downloadBCHCSV()" class="px-3 py-2 text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-file-excel"></i> Tải Danh Sách BCH (CSV)
+                        </button>
                         <button onclick="fetchBCHData()" class="px-3 py-2 text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl transition-all flex items-center gap-1.5">
                             <i class="fa-solid fa-rotate"></i> Tải lại dữ liệu
                         </button>
                         <button onclick="clearAllBCHData()" class="px-3 py-2 text-xs font-semibold bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl transition-all flex items-center gap-1.5">
-                            <i class="fa-solid fa-trash"></i> Xóa Tất Cả Kết Quả
+                            <i class="fa-solid fa-trash"></i> Xóa Tất Cả Trên Google Sheet
                         </button>
                     </div>
                 </div>
@@ -337,9 +324,17 @@
                         <h3 class="text-xl font-bold text-slate-900">Bảng Quản Lý Phiếu Bầu Cử Tri (Giai Đoạn 2)</h3>
                         <p class="text-xs text-slate-500">Chi tiết tất cả phiếu bầu chọn trực tuyến</p>
                     </div>
-                    <button onclick="fetchVoteResults()" class="px-3 py-2 text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-rotate"></i> Tải lại dữ liệu
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="downloadVotesCSV()" class="px-3 py-2 text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-file-excel"></i> Tải Phiếu Bầu (CSV)
+                        </button>
+                        <button onclick="fetchVoteResults()" class="px-3 py-2 text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate"></i> Tải lại dữ liệu
+                        </button>
+                        <button onclick="clearAllVotesData()" class="px-3 py-2 text-xs font-semibold bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-trash"></i> Xóa Tất Cả Phiếu Bầu
+                        </button>
+                    </div>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -352,6 +347,7 @@
                                 <th class="p-3">BẦU TRUYỀN THÔNG</th>
                                 <th class="p-3">BẦU SỰ KIỆN</th>
                                 <th class="p-3">BẦU HẬU CẦN</th>
+                                <th class="p-3 text-center">THAO TÁC</th>
                             </tr>
                         </thead>
                         <tbody id="adminTableBody" class="text-sm divide-y divide-slate-100">
@@ -394,15 +390,15 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC VẼ 4 BIỂU ĐỒ CỘT -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzr0GyhKJkEguubDMTXhdpIkg7h5aBkdMLWmqEGPcrDrpFuu1tN9eCXja37WiCOzx2BjQ/exec';
+        // CẬP NHẬT ĐƯỜNG LINK APPS SCRIPT MỚI
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQtEI-ojVb9eIKfCxxqxa2GcrO8JgLQOy3QYWbUXIwYBO5gjz50_oQUT-BufO8wPVxEQ/exec';
 
         let isAdmin = false;
         let bchList = [];
         let votesList = [];
 
-        // QUẢN LÝ INTANCE CỦA 4 BIỂU ĐỒ CỘT
         let chartObjPres = null;
         let chartObjMedia = null;
         let chartObjEvent = null;
@@ -502,7 +498,6 @@
             `).join('');
         }
 
-        // ĐẾM PHIẾU VÀ ĐỒNG BỘ CẢ 4 CHỨC VỤ LÃNH ĐẠO
         async function fetchVoteResults() {
             try {
                 const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getVotes`);
@@ -526,7 +521,6 @@
                         if (voteLog && voteLog !== 'Không bầu' && voteLog !== '-') logCounts[voteLog] = (logCounts[voteLog] || 0) + 1;
                     });
 
-                    // Tải và vẽ đồng loạt 4 biểu đồ cột
                     renderSingleBarChart('chartPresident', presCounts, '#0d47a1', (obj) => chartObjPres = obj, chartObjPres);
                     renderSingleBarChart('chartMedia', mediaCounts, '#8b5cf6', (obj) => chartObjMedia = obj, chartObjMedia);
                     renderSingleBarChart('chartEvent', eventCounts, '#2563eb', (obj) => chartObjEvent = obj, chartObjEvent);
@@ -541,7 +535,6 @@
             }
         }
 
-        // HÀM DÙNG CHUNG VẼ BIỂU ĐỒ CỘT TÊN ỨNG VIÊN VÀ SỐ PHIẾU
         function renderSingleBarChart(canvasId, dataCounts, color, setChartInstance, currentInstance) {
             if (currentInstance) currentInstance.destroy();
             const ctx = document.getElementById(canvasId);
@@ -585,17 +578,17 @@
             if (!tbody) return;
 
             if (!list || list.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-400 italic">Chưa có phiếu bầu nào được gửi.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-slate-400 italic">Chưa có phiếu bầu nào được gửi.</td></tr>';
                 return;
             }
 
             tbody.innerHTML = list.map(v => {
                 const voterId = v.voterId || v.voter_id || v.mssv || v['MSSV Cử Tri'] || '';
                 const voterName = v.voterName || v.voter_name || v.hoten || v['Họ Tên Cử Tri'] || '';
-                const votePres = v.votePresident || v.vote_president || v['Bầu Chủ Tịch'] || '-';
-                const voteMed = v.voteMedia || v.vote_media || v['Bầu Truyền Thông'] || '-';
-                const voteEvt = v.voteEvent || v.vote_event || v['Bầu Sự Kiện'] || '-';
-                const voteLog = v.voteLogistics || v.vote_logistics || v['Bầu Hậu Cần'] || '-';
+                const votePres = v.votePresident || v.vote_president || v['Bầu Chủ Tịch'] || 'Không bầu';
+                const voteMed = v.voteMedia || v.vote_media || v['Bầu Truyền Thông'] || 'Không bầu';
+                const voteEvt = v.voteEvent || v.vote_event || v['Bầu Sự Kiện'] || 'Không bầu';
+                const voteLog = v.voteLogistics || v.vote_logistics || v['Bầu Hậu Cần'] || 'Không bầu';
 
                 return `
                     <tr class="hover:bg-slate-50 transition-colors">
@@ -605,12 +598,59 @@
                         <td class="p-3"><span class="px-2.5 py-1 bg-purple-50 text-purple-700 font-bold rounded-lg text-xs border border-purple-100">${voteMed}</span></td>
                         <td class="p-3"><span class="px-2.5 py-1 bg-blue-50 text-blue-700 font-bold rounded-lg text-xs border border-blue-100">${voteEvt}</span></td>
                         <td class="p-3"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 font-bold rounded-lg text-xs border border-emerald-100">${voteLog}</span></td>
+                        <td class="p-3 text-center">
+                            <button onclick="deleteVoteRow('${voterId}')" title="Xóa phiếu bầu này trên Google Sheet" class="text-red-500 hover:text-red-700 transition-colors p-1">
+                                <i class="fa-regular fa-trash-can text-base"></i>
+                            </button>
+                        </td>
                     </tr>
                 `;
             }).join('');
         }
 
-        // ĐĂNG KÝ GIAI ĐOẠN 1
+        async function deleteVoteRow(voterId) {
+            if (!voterId) {
+                alert("Không tìm thấy Mã số sinh viên hợp lệ để xóa!");
+                return;
+            }
+            if (confirm(`XÁC NHẬN: Bạn có chắc chắn muốn XÓA VĨNH VIỄN phiếu bầu của cử tri MSSV: ${voterId} khỏi Google Sheets không?`)) {
+                try {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: "delete_vote",
+                            voterId: voterId
+                        })
+                    });
+                    alert(`Đã gửi yêu cầu xóa phiếu bầu MSSV ${voterId} trên Google Sheets!`);
+                    setTimeout(() => fetchVoteResults(), 1200);
+                } catch (e) {
+                    alert('Lỗi xóa phiếu bầu: ' + e.message);
+                }
+            }
+        }
+
+        async function clearAllVotesData() {
+            if (confirm("CẢNH BÁO NGHÊM TRỌNG: Bạn có chắc muốn XÓA TOÀN BỘ danh sách phiếu bầu cử tri trên Google Sheets? Hành động này không thể hoàn tác!")) {
+                try {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: "clear_all_votes"
+                        })
+                    });
+                    alert("Đã gửi yêu cầu xóa tất cả phiếu bầu trên Google Sheets!");
+                    setTimeout(() => fetchVoteResults(), 1200);
+                } catch (e) {
+                    alert('Lỗi xóa toàn bộ phiếu bầu: ' + e.message);
+                }
+            }
+        }
+
         async function handleCandidateSubmit(e) {
             e.preventDefault();
             const btn = document.getElementById('btnSubmitCand');
@@ -645,7 +685,6 @@
             }
         }
 
-        // BỎ PHIẾU GIAI ĐOẠN 2
         async function handleVoteSubmit(e) {
             e.preventDefault();
             const btn = document.getElementById('btnSubmitVote');
@@ -725,13 +764,99 @@
                         </td>
                         <td class="p-4 text-xs text-slate-500 lowercase">${email}</td>
                         <td class="p-4 text-center">
-                            <button onclick="deleteBCHRow('${id}')" class="text-red-500 hover:text-red-700 transition-colors p-1">
+                            <button onclick="deleteBCHRow('${id}')" title="Xóa dòng này trên Google Sheet" class="text-red-500 hover:text-red-700 transition-colors p-1">
                                 <i class="fa-regular fa-trash-can text-base"></i>
                             </button>
                         </td>
                     </tr>
                 `;
             }).join('');
+        }
+
+        async function deleteBCHRow(id) {
+            if (confirm(`XÁC NHẬN: Bạn có chắc chắn muốn XÓA VĨNH VIỄN thành viên (MSSV: ${id}) khỏi Google Sheets không?`)) {
+                try {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: "delete_bch",
+                            id: id
+                        })
+                    });
+                    alert(`Đã gửi yêu cầu xóa MSSV ${id} trên Google Sheets!`);
+                    setTimeout(() => fetchBCHData(), 1200);
+                } catch (e) {
+                    alert('Lỗi xóa dòng: ' + e.message);
+                }
+            }
+        }
+
+        async function clearAllBCHData() {
+            if (confirm("CẢNH BÁO NGHÊM TRỌNG: Bạn có chắc muốn XÓA TOÀN BỘ dữ liệu đăng ký BCH trên Google Sheets? Hành động này không thể hoàn tác!")) {
+                try {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: "clear_all_bch"
+                        })
+                    });
+                    alert("Đã gửi yêu cầu xóa toàn bộ danh sách BCH trên Google Sheets!");
+                    setTimeout(() => fetchBCHData(), 1200);
+                } catch (e) {
+                    alert('Lỗi xóa tất cả: ' + e.message);
+                }
+            }
+        }
+
+        function downloadBCHCSV() {
+            if (!bchList || bchList.length === 0) {
+                alert("Chưa có dữ liệu BCH để tải về!");
+                return;
+            }
+            let csvContent = "\uFEFFMSSV,Họ và tên,Khoa/Lớp,Chức danh Lãnh Đạo,Phân Ban,Email\n";
+            bchList.forEach(item => {
+                const id = item.id || item.mssv || '';
+                const name = item.name || item.hoten || '';
+                const dept = item.department || item.khoa || '';
+                const role = item.leadership || item.chucdanh || 'Không';
+                const comm = item.committee || item.phanban || '';
+                const email = item.email || '';
+                csvContent += `"${id}","${name}","${dept}","${role}","${comm}","${email}"\n`;
+            });
+            downloadCSVFile(csvContent, "Danh_Sach_BCH_VSA_NKUST.csv");
+        }
+
+        function downloadVotesCSV() {
+            if (!votesList || votesList.length === 0) {
+                alert("Chưa có phiếu bầu nào để tải về!");
+                return;
+            }
+            let csvContent = "\uFEFFMSSV Cử Tri,Họ Tên Cử Tri,Bầu Chủ Tịch,Bầu Truyền Thông,Bầu Sự Kiện,Bầu Hậu Cần\n";
+            votesList.forEach(v => {
+                const voterId = v.voterId || v.voter_id || v.mssv || v['MSSV Cử Tri'] || '';
+                const voterName = v.voterName || v.voter_name || v.hoten || v['Họ Tên Cử Tri'] || '';
+                const votePres = v.votePresident || v.vote_president || v['Bầu Chủ Tịch'] || '-';
+                const voteMed = v.voteMedia || v.vote_media || v['Bầu Truyền Thông'] || '-';
+                const voteEvt = v.voteEvent || v.vote_event || v['Bầu Sự Kiện'] || '-';
+                const voteLog = v.voteLogistics || v.vote_logistics || v['Bầu Hậu Cần'] || '-';
+                csvContent += `"${voterId}","${voterName}","${votePres}","${voteMed}","${voteEvt}","${voteLog}"\n`;
+            });
+            downloadCSVFile(csvContent, "Danh_Sach_Phieu_Bau_VSA_NKUST.csv");
+        }
+
+        function downloadCSVFile(csvContent, fileName) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", fileName);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function handleModeSwitch() {
