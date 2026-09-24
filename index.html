@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hội Sinh Viên Việt Nam tại NKUST - Ứng Cử & Bình Chọn</title>
+    <title>Hội Sinh Viên Việt Nam tại NKUST - Ứng Cử & Bầu Chọn</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,33 +21,31 @@
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <!-- LOGO CHÍNH -->
-                <div class="relative w-14 h-14 flex-shrink-0 group">
+                <div class="w-14 h-14 flex-shrink-0">
                     <img id="headerLogo" 
                          src="https://drive.google.com/thumbnail?id=1ptezU0DRT1xZNqvV4xuSPTAXQooH6QNC&sz=w500" 
                          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=150';"
                          alt="Logo VSA NKUST" 
                          class="w-full h-full object-cover rounded-full border border-slate-200 shadow-sm">
                 </div>
-
                 <div>
-                    <h1 class="font-extrabold text-lg sm:text-xl text-slate-900 leading-tight tracking-tight">HỘI SINH VIÊN VIỆT NAM TẠI NKUST</h1>
+                    <h1 class="font-extrabold text-base sm:text-lg text-slate-900 leading-tight">HỘI SINH VIÊN VIỆT NAM TẠI NKUST</h1>
                     <p class="text-xs text-emerald-700 font-bold tracking-wider">VSA NKUST - VIETNAMESE STUDENT ASSOCIATION</p>
                 </div>
             </div>
 
-            <!-- NÚT CHUYỂN CHẾ ĐỘ SINH VIÊN / QUẢN TRỊ VIÊN -->
+            <!-- NÚT BẬT TẮT CHẾ ĐỘ ADMIN -->
             <div class="flex items-center space-x-3">
                 <button id="toggleModeBtn" onclick="handleModeSwitch()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border flex items-center gap-2 bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100">
                     <i class="fa-solid fa-user-graduate"></i>
-                    <span>Chế độ: Sinh viên</span>
+                    <span id="modeText">Chế độ: Sinh viên</span>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
         <!-- HERO BANNER -->
         <section class="hero-gradient rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
@@ -58,7 +56,6 @@
                     <p class="text-blue-100 text-sm sm:text-base leading-relaxed">Xây dựng cộng đồng sinh viên Việt Nam đoàn kết, năng động và phát triển tại Trường Đại học Khoa học & Công nghệ Quốc gia Cao Hùng.</p>
                 </div>
                 
-                <!-- VIDEO HERO BANNER -->
                 <div class="lg:col-span-5 flex justify-center items-center">
                     <div class="w-full max-w-sm bg-black/20 backdrop-blur-md rounded-3xl p-3 border border-white/20 shadow-2xl relative">
                         <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center">
@@ -72,172 +69,244 @@
             </div>
         </section>
 
-        <!-- FORM ĐĂNG KÝ (KHU VỰC SINH VIÊN) -->
-        <section id="studentFormSection" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-                <div class="w-10 h-10 rounded-2xl bg-blue-50 text-vsa-blue flex items-center justify-center font-bold text-lg">1</div>
+        <!-- ĐIỀU HƯỚNG TAB -->
+        <div class="flex border-b border-slate-200 gap-2 sm:gap-4 overflow-x-auto">
+            <button id="tab1Btn" onclick="switchTab(1)" class="py-3 px-4 font-bold text-xs sm:text-sm border-b-2 border-vsa-blue text-vsa-blue transition-all whitespace-nowrap flex items-center gap-2">
+                <i class="fa-solid fa-user-plus"></i> Giai Đoạn 1: Đăng Ký Ứng Cử
+            </button>
+            <button id="tab2Btn" onclick="switchTab(2)" class="py-3 px-4 font-bold text-xs sm:text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all whitespace-nowrap flex items-center gap-2">
+                <i class="fa-solid fa-check-to-slot"></i> Giai Đoạn 2: Bỏ Phiếu & Kết Quả Bình Chọn
+            </button>
+        </div>
+
+        <!-- TAB 1: FORM ĐĂNG KÝ ỨNG CỬ -->
+        <section id="tab1Content" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+            <div class="flex items-center gap-3 pb-4 border-b border-slate-100">
+                <div class="w-10 h-10 rounded-2xl bg-blue-50 text-vsa-blue flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-id-card"></i></div>
                 <div>
-                    <h3 class="text-xl font-bold text-slate-900">Xác Nhận Thông Tin Sinh Viên & Ứng Cử / Bầu Chọn</h3>
-                    <p class="text-xs text-slate-500">Sinh viên điền chính xác thông tin để được ghi nhận vào Danh sách Ban Chấp Hành NKUST</p>
+                    <h3 class="text-xl font-bold text-slate-900">Giai Đoạn 1: Đăng Ký Ứng Cử Ban Chấp Hành</h3>
+                    <p class="text-xs text-slate-500">Thông tin ứng tuyển vị trí Lãnh đạo sẽ chuyển sang làm danh sách chọn cho Giai đoạn 2</p>
                 </div>
             </div>
 
-            <form id="studentRegistrationForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+            <form onsubmit="handleCandidateSubmit(event)" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Họ và Tên Sinh Viên <span class="text-red-500">*</span></label>
-                        <input type="text" id="fullName" required placeholder="Ví dụ: Nguyễn Văn A" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all">
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Họ và Tên Sinh Viên *</label>
+                        <input type="text" id="candName" required placeholder="Nguyễn Văn A" class="w-full px-4 py-3 rounded-xl border border-slate-300 outline-none text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Mã Số Sinh Viên (MSSV) <span class="text-red-500">*</span></label>
-                        <input type="text" id="studentId" required placeholder="Ví dụ: C110123456" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all">
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Mã Số Sinh Viên (MSSV) *</label>
+                        <input type="text" id="candId" required placeholder="C110123456" class="w-full px-4 py-3 rounded-xl border border-slate-300 outline-none text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Khoa / Lớp Học <span class="text-red-500">*</span></label>
-                        <input type="text" id="department" required placeholder="Ví dụ: Quản trị Kinh doanh / CNTT" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all">
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Khoa / Lớp Học *</label>
+                        <input type="text" id="candDept" required placeholder="Quản trị Kinh doanh" class="w-full px-4 py-3 rounded-xl border border-slate-300 outline-none text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Email <span class="text-red-500">*</span></label>
-                        <input type="email" id="email" required placeholder="Ví dụ: example@nkust.edu.tw" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all">
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Email *</label>
+                        <input type="email" id="candEmail" required placeholder="example@nkust.edu.tw" class="w-full px-4 py-3 rounded-xl border border-slate-300 outline-none text-sm">
                     </div>
                 </div>
 
                 <div class="pt-4 border-t border-slate-100 space-y-6">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">
-                            2. Ứng Cử / Bình Chọn Chức Danh Lãnh Đạo <span class="text-red-500">*</span>
-                        </label>
-                        <select id="leadershipRole" onchange="handleLeadershipChange()" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
-                            <option value="Không">Không ứng cử chức danh lãnh đạo (Chỉ tham gia phân ban/thành viên)</option>
-                            <option value="Chủ Tịch Hội Sinh Viên Việt Nam Tại NKUST">Chủ Tịch Hội Sinh Viên Việt Nam Tại NKUST</option>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Đăng Ký Ứng Cử Chức Danh Lãnh Đạo *</label>
+                        <select id="candRole" onchange="handleRoleChange()" class="w-full px-4 py-3 rounded-xl border border-slate-300 outline-none text-sm bg-white font-semibold text-slate-800">
+                            <option value="Không">Không ứng cử Lãnh đạo (Chỉ đăng ký làm Thành viên ban)</option>
+                            <option value="Chủ Tịch">Chủ Tịch Hội Sinh Viên</option>
+                            <option value="Trưởng Phân Ban Truyền Thông">Trưởng Phân Ban Truyền Thông</option>
                             <option value="Trưởng Phân Ban Sự Kiện">Trưởng Phân Ban Sự Kiện</option>
                             <option value="Trưởng Phân Ban Hậu Cần">Trưởng Phân Ban Hậu Cần</option>
-                            <option value="Trưởng Phân Ban Truyền Thông">Trưởng Phân Ban Truyền Thông</option>
                         </select>
                     </div>
 
-                    <div id="subCommitteeSection" class="transition-all duration-300">
-                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">
-                            3. Ứng Cử / Tham Gia Thành Viên Các Phân Ban <span class="text-red-500">*</span>
+                    <!-- VÙNG CHỌN PHÂN BAN -->
+                    <div id="committeeContainer" class="space-y-2 transition-all">
+                        <label class="block text-xs font-semibold text-slate-700 uppercase">
+                            Đăng Ký Thành Viên Phân Ban <span id="committeeLockNote" class="text-amber-600 font-normal lowercase italic"></span>
                         </label>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                            <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer">
-                                <input type="radio" name="committee" value="Sự kiện" checked class="w-4 h-4 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2 text-sm font-medium text-slate-700">Phân Ban Sự Kiện</span>
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl cursor-pointer">
+                                <input type="radio" name="candCommittee" value="Sự kiện" checked class="w-4 h-4 text-blue-600">
+                                <span class="ml-2 text-sm font-medium">Phân Ban Sự Kiện</span>
                             </label>
-                            <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer">
-                                <input type="radio" name="committee" value="Hậu cần" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2 text-sm font-medium text-slate-700">Phân Ban Hậu Cần</span>
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl cursor-pointer">
+                                <input type="radio" name="candCommittee" value="Hậu cần" class="w-4 h-4 text-blue-600">
+                                <span class="ml-2 text-sm font-medium">Phân Ban Hậu Cần</span>
                             </label>
-                            <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer">
-                                <input type="radio" name="committee" value="Truyền thông" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2 text-sm font-medium text-slate-700">Phân Ban Truyền Thông</span>
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl cursor-pointer">
+                                <input type="radio" name="candCommittee" value="Truyền thông" class="w-4 h-4 text-blue-600">
+                                <span class="ml-2 text-sm font-medium">Phân Ban Truyền Thông</span>
                             </label>
-                            <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer">
-                                <input type="radio" name="committee" value="Thành viên tự do" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2 text-sm font-medium text-slate-700">Thành viên tự do</span>
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl cursor-pointer">
+                                <input type="radio" name="candCommittee" value="Thành viên tự do" class="w-4 h-4 text-blue-600">
+                                <span class="ml-2 text-sm font-medium">Thành viên tự do</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex justify-end pt-2">
-                    <button type="submit" class="px-8 py-3 bg-vsa-blue hover:bg-blue-800 text-white font-semibold rounded-xl shadow-lg transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-paper-plane"></i> Gửi Xác Nhận Thông Tin
+                <div class="flex justify-end">
+                    <button type="submit" id="btnSubmitCand" class="px-8 py-3 bg-vsa-blue hover:bg-blue-800 text-white font-semibold rounded-xl shadow-lg transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Gửi Hồ Sơ Đăng Ký
                     </button>
                 </div>
             </form>
         </section>
 
-        <!-- THƯ VIỆN HÌNH ẢNH HOẠT ĐỘNG -->
-        <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-                <div>
-                    <h3 class="text-xl font-bold text-slate-900">Hình Ảnh Hoạt Động Hội Sinh Viên NKUST</h3>
-                    <p class="text-xs text-slate-500">Bộ sưu tập hình ảnh hoạt động của Hội Sinh Viên</p>
+        <!-- TAB 2: CỔNG BẦU CHỌN & KẾT QUẢ -->
+        <div id="tab2Content" class="hidden space-y-8">
+            
+            <!-- SECTION BỎ PHIẾU BẦU CHỌN -->
+            <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-8">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-vote-yea"></i></div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">Bỏ Phiếu Bầu Chọn Chức Danh Lãnh Đạo</h3>
+                            <p class="text-xs text-slate-500">Danh sách ứng viên được đồng bộ trực tiếp từ dữ liệu Đăng ký ở Giai đoạn 1</p>
+                        </div>
+                    </div>
+                    <button onclick="loadCandidatesForVote()" class="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded-xl border border-blue-200 flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate"></i> Cập nhật ứng viên
+                    </button>
                 </div>
-            </div>
 
-            <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <!-- JS Render Album Ảnh -->
-            </div>
-        </section>
+                <form onsubmit="handleVoteSubmit(event)" class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <!-- KHU VỰC QUẢN TRỊ VIÊN (ADMIN AREA) -->
-        <div id="adminArea" class="hidden space-y-10">
+                        <!-- CHỦ TỊCH -->
+                        <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-crown text-amber-500"></i> Chủ Tịch Hội Sinh Viên
+                            </h4>
+                            <div id="listPresident" class="space-y-2">
+                                <p class="text-xs text-slate-400 italic p-2"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Đang tải danh sách...</p>
+                            </div>
+                        </div>
+
+                        <!-- TRUYỀN THÔNG -->
+                        <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-bullhorn text-purple-500"></i> Trưởng Phân Ban Truyền Thông
+                            </h4>
+                            <div id="listMedia" class="space-y-2">
+                                <p class="text-xs text-slate-400 italic p-2"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Đang tải danh sách...</p>
+                            </div>
+                        </div>
+
+                        <!-- SỰ KIỆN -->
+                        <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-star text-blue-500"></i> Trưởng Phân Ban Sự Kiện
+                            </h4>
+                            <div id="listEvent" class="space-y-2">
+                                <p class="text-xs text-slate-400 italic p-2"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Đang tải danh sách...</p>
+                            </div>
+                        </div>
+
+                        <!-- HẬU CẦN -->
+                        <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-boxes-packing text-emerald-500"></i> Trưởng Phân Ban Hậu Cần
+                            </h4>
+                            <div id="listLogistics" class="space-y-2">
+                                <p class="text-xs text-slate-400 italic p-2"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Đang tải danh sách...</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="pt-6 border-t border-slate-200 space-y-4">
+                        <h4 class="font-bold text-slate-900 text-sm">Xác nhận thông tin Cử tri bỏ phiếu</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" id="voterName" required placeholder="Họ và Tên Cử Tri *" class="px-4 py-3 rounded-xl border border-slate-300 text-sm outline-none">
+                            <input type="text" id="voterId" required placeholder="Mã Số Sinh Viên (MSSV) *" class="px-4 py-3 rounded-xl border border-slate-300 text-sm outline-none">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit" id="btnSubmitVote" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-check-to-slot"></i> Xác Nhận Bỏ Phiếu Bình Chọn
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- SECTION KẾT QUẢ BÌNH CHỌN 4 VI TRỊ (DẠNG BIỂU ĐỒ CỘT DỄ NHÌN) -->
+            <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-8">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-chart-line"></i></div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">Kết Quả Bình Chọn Trực Tuyến</h3>
+                            <p class="text-xs text-slate-500">Thống kê dữ liệu phiếu bầu thực tế phát sinh từ cổng bỏ phiếu phía trên</p>
+                        </div>
+                    </div>
+                    <button onclick="fetchVoteResults()" class="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded-xl border border-blue-200 flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate"></i> Cập nhật kết quả
+                    </button>
+                </div>
+
+                <!-- LƯỚI BIỂU ĐỒ CỘT 4 CHỨC VỤ LÃNH ĐẠO -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 1. CHỦ TỊCH -->
+                    <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-crown text-amber-500"></i> Biểu Đồ Bình Chọn Chủ Tịch
+                        </h4>
+                        <div class="h-64"><canvas id="chartPresident"></canvas></div>
+                    </div>
+
+                    <!-- 2. TRƯỜNG PHÂN BAN TRUYỀN THÔNG -->
+                    <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-bullhorn text-purple-500"></i> Biểu Đồ Bình Chọn Trưởng Phân Ban Truyền Thông
+                        </h4>
+                        <div class="h-64"><canvas id="chartMedia"></canvas></div>
+                    </div>
+
+                    <!-- 3. TRƯỜNG PHÂN BAN SỰ KIỆN -->
+                    <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-star text-blue-500"></i> Biểu Đồ Bình Chọn Trưởng Phân Ban Sự Kiện
+                        </h4>
+                        <div class="h-64"><canvas id="chartEvent"></canvas></div>
+                    </div>
+
+                    <!-- 4. TRƯỜNG PHÂN BAN HẬU CẦN -->
+                    <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 space-y-4">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-boxes-packing text-emerald-500"></i> Biểu Đồ Bình Chọn Trưởng Phân Ban Hậu Cần
+                        </h4>
+                        <div class="h-64"><canvas id="chartLogistics"></canvas></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- KHU VỰC ADMIN -->
+        <div id="adminArea" class="hidden space-y-8">
             <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-between text-amber-900 text-sm">
-                <span class="font-medium"><i class="fa-solid fa-user-shield mr-2"></i> Quyền Quản Trị Viên (Admin) đã bật.</span>
-                <button onclick="logoutAdmin()" class="text-xs font-semibold underline text-amber-800 hover:text-amber-950">Chuyển về Chế độ Sinh viên</button>
+                <span class="font-medium"><i class="fa-solid fa-user-shield mr-2"></i> Quyền Quản Trị Viên (Admin) đang hoạt động.</span>
+                <button onclick="logoutAdmin()" class="text-xs font-semibold underline text-amber-800 hover:text-amber-950">Đăng xuất Admin</button>
             </div>
 
-            <!-- THỐNG KÊ OVERVIEW -->
-            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-vsa-blue flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-users"></i></div>
+            <!-- BẢNG GIAI ĐOẠN 1: BAN CHẤP HÀNH -->
+            <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
                     <div>
-                        <p class="text-xs text-slate-500 uppercase font-semibold">Tổng Sinh Viên BCH</p>
-                        <h4 id="statTotal" class="text-2xl font-black text-slate-900">0</h4>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-crown"></i></div>
-                    <div>
-                        <p class="text-xs text-slate-500 uppercase font-semibold">Ứng Cử Lãnh Đạo</p>
-                        <h4 id="statLeaders" class="text-2xl font-black text-slate-900">0</h4>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-layer-group"></i></div>
-                    <div>
-                        <p class="text-xs text-slate-500 uppercase font-semibold">Thành Viên Phân Ban</p>
-                        <h4 id="statMembers" class="text-2xl font-black text-slate-900">0</h4>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-chart-pie"></i></div>
-                    <div>
-                        <p class="text-xs text-slate-500 uppercase font-semibold">Tỷ Lệ Thành Viên</p>
-                        <h4 id="statRatio" class="text-2xl font-black text-slate-900">0%</h4>
-                    </div>
-                </div>
-            </section>
-
-            <!-- BIỂU ĐỒ THỐNG KÊ -->
-            <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-bar text-vsa-blue"></i> Thống Kê Ứng Cử Lãnh Đạo
-                    </h4>
-                    <div class="h-64">
-                        <canvas id="leadershipChart"></canvas>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-pie text-emerald-600"></i> Phân Bổ Thành Viên Các Phân Ban
-                    </h4>
-                    <div class="h-64">
-                        <canvas id="committeeChart"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- DANH SÁCH BAN CHẤP HÀNH -->
-            <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">Danh Sách Ban Chấp Hành (BCH) Hội Sinh Viên NKUST</h3>
-                        <p class="text-xs text-slate-500">Dữ liệu được đồng bộ trực tiếp từ Google Sheets</p>
+                        <h3 class="text-2xl font-bold text-slate-900">Danh Sách Ban Chấp Hành (BCH) Hội Sinh Viên NKUST</h3>
+                        <p class="text-xs text-slate-500">Dữ liệu được đồng bộ trực tiếp từ Google Sheets (Giai đoạn 1)</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="fetchStudentsFromGoogleSheet()" class="px-3 py-2 text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl transition-all flex items-center gap-1.5">
+                        <button onclick="fetchBCHData()" class="px-3 py-2 text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl transition-all flex items-center gap-1.5">
                             <i class="fa-solid fa-rotate"></i> Tải lại dữ liệu
                         </button>
-                        <button onclick="clearAllData()" class="px-3 py-2 text-xs font-semibold bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl transition-all flex items-center gap-1.5">
-                            <i class="fa-solid fa-trash-can"></i> Xóa Tất Cả Kết Quả
-                        </button>
-                        <button onclick="exportCSV()" class="px-3 py-2 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all flex items-center gap-1.5">
-                            <i class="fa-solid fa-file-csv"></i> Xuất CSV
+                        <button onclick="clearAllBCHData()" class="px-3 py-2 text-xs font-semibold bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-trash"></i> Xóa Tất Cả Kết Quả
                         </button>
                     </div>
                 </div>
@@ -245,39 +314,67 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase bg-slate-50/50">
-                                <th class="p-3">MSSV</th>
-                                <th class="p-3">Họ và Tên</th>
-                                <th class="p-3">Khoa / Lớp</th>
-                                <th class="p-3">Chức Danh Lãnh Đạo</th>
-                                <th class="p-3">Phân Ban</th>
-                                <th class="p-3">Email</th>
-                                <th class="p-3 text-center">Thao tác</th>
+                            <tr class="border-b border-slate-200 text-xs font-bold text-slate-400 uppercase bg-slate-50/50">
+                                <th class="p-4">MSSV</th>
+                                <th class="p-4">HỌ VÀ TÊN</th>
+                                <th class="p-4">KHOA / LỚP</th>
+                                <th class="p-4">CHỨC DANH LÃNH ĐẠO</th>
+                                <th class="p-4">PHÂN BAN</th>
+                                <th class="p-4">EMAIL</th>
+                                <th class="p-4 text-center">THAO TÁC</th>
                             </tr>
                         </thead>
-                        <tbody id="studentTableBody" class="text-sm divide-y divide-slate-100">
+                        <tbody id="bchTableBody" class="text-sm divide-y divide-slate-100">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- BẢNG GIAI ĐOẠN 2: PHIẾU BẦU CỬ TRI -->
+            <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Bảng Quản Lý Phiếu Bầu Cử Tri (Giai Đoạn 2)</h3>
+                        <p class="text-xs text-slate-500">Chi tiết tất cả phiếu bầu chọn trực tuyến</p>
+                    </div>
+                    <button onclick="fetchVoteResults()" class="px-3 py-2 text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate"></i> Tải lại dữ liệu
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-xs font-bold text-slate-400 uppercase bg-slate-50/50">
+                                <th class="p-3">MSSV CỬ TRI</th>
+                                <th class="p-3">HỌ TÊN CỬ TRI</th>
+                                <th class="p-3">BẦU CHỦ TỊCH</th>
+                                <th class="p-3">BẦU TRUYỀN THÔNG</th>
+                                <th class="p-3">BẦU SỰ KIỆN</th>
+                                <th class="p-3">BẦU HẬU CẦN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody" class="text-sm divide-y divide-slate-100">
                         </tbody>
                     </table>
                 </div>
             </section>
         </div>
+
+        <!-- ALBUM ẢNH -->
+        <section class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+            <h3 class="text-xl font-bold text-slate-900">Thư Viện Ảnh Hoạt Động Hội Sinh Viên NKUST</h3>
+            <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+        </section>
+
     </main>
 
-    <!-- FOOTER -->
     <footer class="bg-white border-t border-slate-200 py-6 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
             <p class="font-semibold text-slate-700">HỘI SINH VIÊN VIỆT NAM TẠI TRƯỜNG ĐẠI HỌC KHOA HỌC & CÔNG NGHỆ QUỐC GIA CAO HÙNG (NKUST)</p>
             <p>© Nhiệm kỳ 2026 - 2027. Tất cả quyền được bảo lưu.</p>
         </div>
     </footer>
-
-    <!-- MODAL PHÓNG TO HÌNH ẢNH -->
-    <div id="imageModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden p-4" onclick="closeImageModal()">
-        <div class="relative max-w-4xl w-full">
-            <img id="modalImg" src="" class="max-h-[85vh] mx-auto rounded-2xl shadow-2xl object-contain">
-            <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white text-2xl"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-    </div>
 
     <!-- MODAL ĐĂNG NHẬP ADMIN -->
     <div id="adminModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
@@ -286,7 +383,6 @@
             <div class="text-center space-y-2 mb-6">
                 <div class="w-12 h-12 rounded-2xl bg-blue-50 text-vsa-blue mx-auto flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-user-lock"></i></div>
                 <h3 class="text-xl font-bold text-slate-900">Đăng Nhập Quản Trị Viên</h3>
-                <p class="text-xs text-slate-500">Vui lòng nhập mật khẩu xác thực để tiếp tục</p>
             </div>
             <form onsubmit="handleAdminLogin(event)" class="space-y-4">
                 <div>
@@ -298,96 +394,238 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT LOGIC VẼ 4 BIỂU ĐỒ CỘT -->
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWcPCaDbot8fwGL5zGeqqvrQm0ADVebaJM1G-MDMaQWKFCoSJhSpMxcKRpPjy-zWJ56g/exec';
-
-        let studentList = [];
-
-        // DANH SÁCH ẢNH TỰ ĐỘNG CHUYỂN ĐỔI SANG THUMBNAIL CỦA GOOGLE DRIVE
-        let galleryImages = [
-            { 
-                url: "https://drive.google.com/thumbnail?id=1Str2kNZBJGRwZWS30Bd1ymOfgZnC4n2t&sz=w1000", 
-                fallback: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800",
-                title: "Giao Lưu Sinh Viên" 
-            },
-            { 
-                url: "https://drive.google.com/thumbnail?id=14jGHgutjk8UWJfKWVSStOooXGKa4AhaT&sz=w1000", 
-                fallback: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800",
-                title: "Hội Thảo NKUST" 
-            },
-            { 
-                url: "https://drive.google.com/thumbnail?id=1-ZPmm2ahbHzNmr9kSNQtipUdEwdArpy1&sz=w1000", 
-                fallback: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800",
-                title: "Lễ Bảo Vệ Luận Văn" 
-            }
-        ];
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzr0GyhKJkEguubDMTXhdpIkg7h5aBkdMLWmqEGPcrDrpFuu1tN9eCXja37WiCOzx2BjQ/exec';
 
         let isAdmin = false;
-        let leadershipChart = null;
-        let committeeChart = null;
+        let bchList = [];
+        let votesList = [];
+
+        // QUẢN LÝ INTANCE CỦA 4 BIỂU ĐỒ CỘT
+        let chartObjPres = null;
+        let chartObjMedia = null;
+        let chartObjEvent = null;
+        let chartObjLog = null;
+
+        const galleryImages = [
+            { url: "https://drive.google.com/thumbnail?id=1Str2kNZBJGRwZWS30Bd1ymOfgZnC4n2t&sz=w1000", fallback: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800", title: "Giao Lưu Sinh Viên" },
+            { url: "https://drive.google.com/thumbnail?id=14jGHgutjk8UWJfKWVSStOooXGKa4AhaT&sz=w1000", fallback: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800", title: "Hội Thảo NKUST" },
+            { url: "https://drive.google.com/thumbnail?id=1-ZPmm2ahbHzNmr9kSNQtipUdEwdArpy1&sz=w1000", fallback: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800", title: "Lễ Bảo Vệ Luận Văn" }
+        ];
 
         window.addEventListener('DOMContentLoaded', () => {
             renderGallery();
         });
 
-        // XỬ LÝ ALBUM ẢNH
         function renderGallery() {
             const grid = document.getElementById('galleryGrid');
             if(!grid) return;
-            grid.innerHTML = galleryImages.map((img, idx) => `
+            grid.innerHTML = galleryImages.map((img) => `
                 <div class="group relative rounded-2xl overflow-hidden shadow cursor-pointer h-36 border border-slate-100 bg-slate-100">
-                    <img src="${img.url}" 
-                         onerror="this.onerror=null; this.src='${img.fallback}';"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" 
-                         onclick="openImageModal(this.src)">
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2 text-xs text-white font-medium pointer-events-none">
-                        <span class="truncate">${img.title}</span>
+                    <img src="${img.url}" onerror="this.onerror=null; this.src='${img.fallback}';" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span class="text-white text-xs font-semibold px-2 text-center">${img.title}</span>
                     </div>
                 </div>
             `).join('');
         }
 
-        function openImageModal(src) {
-            document.getElementById('modalImg').src = src;
-            document.getElementById('imageModal').classList.remove('hidden');
-        }
+        function switchTab(tabIndex) {
+            [1, 2].forEach(i => {
+                document.getElementById(`tab${i}Content`).classList.add('hidden');
+                document.getElementById(`tab${i}Btn`).className = "py-3 px-4 font-bold text-xs sm:text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all whitespace-nowrap flex items-center gap-2";
+            });
 
-        function closeImageModal() {
-            document.getElementById('imageModal').classList.add('hidden');
-        }
+            document.getElementById(`tab${tabIndex}Content`).classList.remove('hidden');
+            document.getElementById(`tab${tabIndex}Btn`).className = "py-3 px-4 font-bold text-xs sm:text-sm border-b-2 border-vsa-blue text-vsa-blue transition-all whitespace-nowrap flex items-center gap-2";
 
-        // FORM ĐĂNG KÝ
-        function handleLeadershipChange() {
-            const leadershipVal = document.getElementById('leadershipRole').value;
-            const subCommitteeSec = document.getElementById('subCommitteeSection');
-            if (leadershipVal !== "Không") {
-                subCommitteeSec.classList.add('opacity-40', 'pointer-events-none');
-            } else {
-                subCommitteeSec.classList.remove('opacity-40', 'pointer-events-none');
+            if (tabIndex === 2) {
+                loadCandidatesForVote();
+                fetchVoteResults();
             }
         }
 
-        async function handleFormSubmit(e) {
+        async function loadCandidatesForVote() {
+            try {
+                const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getAllBCH`);
+                if (res.ok) {
+                    const data = await res.json();
+                    
+                    const presidentList = [];
+                    const mediaList = [];
+                    const eventList = [];
+                    const logisticsList = [];
+
+                    data.forEach(item => {
+                        const role = item.leadership || item.chucdanh || item['Chức danh'] || item['Chức Danh Lãnh Đạo'] || '';
+                        const candObj = {
+                            name: item.name || item.hoten || item['Họ và tên'] || item['HỌ VÀ TÊN'] || '',
+                            id: item.id || item.mssv || item['MSSV'] || '',
+                            department: item.department || item.khoa || item['Khoa / Lớp'] || item['KHOA / LỚP'] || ''
+                        };
+
+                        if (role === 'Chủ Tịch') presidentList.push(candObj);
+                        else if (role === 'Trưởng Phân Ban Truyền Thông') mediaList.push(candObj);
+                        else if (role === 'Trưởng Phân Ban Sự Kiện') eventList.push(candObj);
+                        else if (role === 'Trưởng Phân Ban Hậu Cần') logisticsList.push(candObj);
+                    });
+
+                    renderRadioGroup('listPresident', presidentList, 'vote_president');
+                    renderRadioGroup('listMedia', mediaList, 'vote_media');
+                    renderRadioGroup('listEvent', eventList, 'vote_event');
+                    renderRadioGroup('listLogistics', logisticsList, 'vote_logistics');
+                }
+            } catch (e) {
+                console.error("Lỗi tải danh sách ứng viên:", e);
+            }
+        }
+
+        function renderRadioGroup(containerId, list, radioName) {
+            const el = document.getElementById(containerId);
+            if (!el) return;
+            if (!list || list.length === 0) {
+                el.innerHTML = '<p class="text-xs text-slate-400 italic p-2">Chưa có ứng viên đăng ký vị trí này ở Giai đoạn 1.</p>';
+                return;
+            }
+            el.innerHTML = list.map((item, idx) => `
+                <label class="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-400 cursor-pointer transition-all shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <input type="radio" name="${radioName}" value="${item.name} (${item.id})" class="w-4 h-4 text-blue-600">
+                        <div>
+                            <p class="text-sm font-bold text-slate-800">${item.name}</p>
+                            <p class="text-xs text-slate-500">${item.department} - MSSV: ${item.id}</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg">Ứng viên ${idx + 1}</span>
+                </label>
+            `).join('');
+        }
+
+        // ĐẾM PHIẾU VÀ ĐỒNG BỘ CẢ 4 CHỨC VỤ LÃNH ĐẠO
+        async function fetchVoteResults() {
+            try {
+                const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getVotes`);
+                if (res.ok) {
+                    votesList = await res.json();
+                    
+                    const presCounts = {};
+                    const mediaCounts = {};
+                    const eventCounts = {};
+                    const logCounts = {};
+
+                    votesList.forEach(v => {
+                        const votePres = v.votePresident || v.vote_president || v['Bầu Chủ Tịch'] || '';
+                        const voteMed = v.voteMedia || v.vote_media || v['Bầu Truyền Thông'] || '';
+                        const voteEvt = v.voteEvent || v.vote_event || v['Bầu Sự Kiện'] || '';
+                        const voteLog = v.voteLogistics || v.vote_logistics || v['Bầu Hậu Cần'] || '';
+
+                        if (votePres && votePres !== 'Không bầu' && votePres !== '-') presCounts[votePres] = (presCounts[votePres] || 0) + 1;
+                        if (voteMed && voteMed !== 'Không bầu' && voteMed !== '-') mediaCounts[voteMed] = (mediaCounts[voteMed] || 0) + 1;
+                        if (voteEvt && voteEvt !== 'Không bầu' && voteEvt !== '-') eventCounts[voteEvt] = (eventCounts[voteEvt] || 0) + 1;
+                        if (voteLog && voteLog !== 'Không bầu' && voteLog !== '-') logCounts[voteLog] = (logCounts[voteLog] || 0) + 1;
+                    });
+
+                    // Tải và vẽ đồng loạt 4 biểu đồ cột
+                    renderSingleBarChart('chartPresident', presCounts, '#0d47a1', (obj) => chartObjPres = obj, chartObjPres);
+                    renderSingleBarChart('chartMedia', mediaCounts, '#8b5cf6', (obj) => chartObjMedia = obj, chartObjMedia);
+                    renderSingleBarChart('chartEvent', eventCounts, '#2563eb', (obj) => chartObjEvent = obj, chartObjEvent);
+                    renderSingleBarChart('chartLogistics', logCounts, '#059669', (obj) => chartObjLog = obj, chartObjLog);
+
+                    if (isAdmin) {
+                        renderAdminVotesTable(votesList);
+                    }
+                }
+            } catch (e) {
+                console.error("Lỗi tải kết quả phiếu bầu:", e);
+            }
+        }
+
+        // HÀM DÙNG CHUNG VẼ BIỂU ĐỒ CỘT TÊN ỨNG VIÊN VÀ SỐ PHIẾU
+        function renderSingleBarChart(canvasId, dataCounts, color, setChartInstance, currentInstance) {
+            if (currentInstance) currentInstance.destroy();
+            const ctx = document.getElementById(canvasId);
+            if (!ctx) return;
+
+            const labels = Object.keys(dataCounts).length ? Object.keys(dataCounts) : ['Chưa có phiếu bầu'];
+            const values = Object.values(dataCounts).length ? Object.values(dataCounts) : [0];
+
+            const newChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Số phiếu bầu',
+                        data: values,
+                        backgroundColor: color,
+                        borderRadius: 8,
+                        maxBarThickness: 50
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1, precision: 0 }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            setChartInstance(newChart);
+        }
+
+        function renderAdminVotesTable(list) {
+            const tbody = document.getElementById('adminTableBody');
+            if (!tbody) return;
+
+            if (!list || list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-400 italic">Chưa có phiếu bầu nào được gửi.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = list.map(v => {
+                const voterId = v.voterId || v.voter_id || v.mssv || v['MSSV Cử Tri'] || '';
+                const voterName = v.voterName || v.voter_name || v.hoten || v['Họ Tên Cử Tri'] || '';
+                const votePres = v.votePresident || v.vote_president || v['Bầu Chủ Tịch'] || '-';
+                const voteMed = v.voteMedia || v.vote_media || v['Bầu Truyền Thông'] || '-';
+                const voteEvt = v.voteEvent || v.vote_event || v['Bầu Sự Kiện'] || '-';
+                const voteLog = v.voteLogistics || v.vote_logistics || v['Bầu Hậu Cần'] || '-';
+
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-3 font-bold text-blue-600">${voterId}</td>
+                        <td class="p-3 font-semibold text-slate-800 uppercase">${voterName}</td>
+                        <td class="p-3"><span class="px-2.5 py-1 bg-amber-50 text-amber-700 font-bold rounded-lg text-xs border border-amber-100">${votePres}</span></td>
+                        <td class="p-3"><span class="px-2.5 py-1 bg-purple-50 text-purple-700 font-bold rounded-lg text-xs border border-purple-100">${voteMed}</span></td>
+                        <td class="p-3"><span class="px-2.5 py-1 bg-blue-50 text-blue-700 font-bold rounded-lg text-xs border border-blue-100">${voteEvt}</span></td>
+                        <td class="p-3"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 font-bold rounded-lg text-xs border border-emerald-100">${voteLog}</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ĐĂNG KÝ GIAI ĐOẠN 1
+        async function handleCandidateSubmit(e) {
             e.preventDefault();
-            
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
+            const btn = document.getElementById('btnSubmitCand');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
 
-            const name = document.getElementById('fullName').value.trim();
-            const id = document.getElementById('studentId').value.trim();
-            const department = document.getElementById('department').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const leadership = document.getElementById('leadershipRole').value;
-            
-            let committee = "Ban Điều Hành";
-            if (leadership === "Không") {
-                const selectedRadio = document.querySelector('input[name="committee"]:checked');
-                committee = selectedRadio ? selectedRadio.value : "Thành viên tự do";
-            }
-
-            const payload = { id, name, department, email, leadership, committee };
+            const payload = {
+                action: "register_candidate",
+                name: document.getElementById('candName').value.trim(),
+                id: document.getElementById('candId').value.trim(),
+                department: document.getElementById('candDept').value.trim(),
+                email: document.getElementById('candEmail').value.trim(),
+                leadership: document.getElementById('candRole').value,
+                committee: document.querySelector('input[name="candCommittee"]:checked')?.value || "Thành viên tự do"
+            };
 
             try {
                 await fetch(GOOGLE_SCRIPT_URL, {
@@ -396,194 +634,109 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
-                alert('Xác nhận thông tin sinh viên thành công và đã lưu vào hệ thống!');
-                document.getElementById('studentRegistrationForm').reset();
-                handleLeadershipChange();
-                
-                if (isAdmin) {
-                    fetchStudentsFromGoogleSheet();
-                }
+                alert('Đăng ký ứng cử thành công!');
+                e.target.reset();
+                handleRoleChange();
             } catch (err) {
-                alert('Có lỗi xảy ra khi gửi dữ liệu: ' + err.message);
+                alert('Lỗi đăng ký: ' + err.message);
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Gửi Xác Nhận Thông Tin';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Gửi Hồ Sơ Đăng Ký';
             }
         }
 
-        // ĐỒNG BỘ DỮ LIỆU TỪ GOOGLE SHEETS
-        async function fetchStudentsFromGoogleSheet() {
-            const tbody = document.getElementById('studentTableBody');
-            if (tbody) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang tải dữ liệu từ Google Sheet...</td></tr>`;
-            }
+        // BỎ PHIẾU GIAI ĐOẠN 2
+        async function handleVoteSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitVote');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi phiếu...';
+
+            const payload = {
+                action: "submit_vote",
+                voterName: document.getElementById('voterName').value.trim(),
+                voterId: document.getElementById('voterId').value.trim(),
+                votePresident: document.querySelector('input[name="vote_president"]:checked')?.value || 'Không bầu',
+                voteMedia: document.querySelector('input[name="vote_media"]:checked')?.value || 'Không bầu',
+                voteEvent: document.querySelector('input[name="vote_event"]:checked')?.value || 'Không bầu',
+                voteLogistics: document.querySelector('input[name="vote_logistics"]:checked')?.value || 'Không bầu'
+            };
 
             try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'GET',
-                    redirect: 'follow'
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
-                
-                if (!response.ok) {
-                    throw new Error(`Lỗi kết nối HTTP: ${response.status}`);
-                }
-
-                const data = await response.json();
-                studentList = data;
-                saveAndRefresh();
+                alert('Bỏ phiếu bầu chọn thành công!');
+                e.target.reset();
+                fetchVoteResults();
             } catch (err) {
-                console.error('Không thể lấy dữ liệu từ Google Sheet:', err);
-                if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-rose-500 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Không thể tải dữ liệu. Vui lòng kiểm tra cấu hình.</td></tr>`;
+                alert('Lỗi gửi phiếu bầu: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-check-to-slot"></i> Xác Nhận Bỏ Phiếu Bình Chọn';
+            }
+        }
+
+        async function fetchBCHData() {
+            try {
+                const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getAllBCH`);
+                if (res.ok) {
+                    bchList = await res.json();
+                    renderBCHTable(bchList);
                 }
+            } catch (e) {
+                console.error("Lỗi tải BCH:", e);
             }
         }
 
-        // XÓA 1 SINH VIÊN
-        async function deleteStudent(index) {
-            const student = studentList[index];
-            if (confirm(`Bạn có chắc chắn muốn xóa sinh viên ${student.name} (MSSV: ${student.id}) khỏi Google Sheet?`)) {
-                try {
-                    await fetch(GOOGLE_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ action: 'deleteSingle', id: student.id })
-                    });
-
-                    studentList.splice(index, 1);
-                    saveAndRefresh();
-                    alert(`Đã xóa thành công sinh viên ${student.name}`);
-                } catch (err) {
-                    alert('Lỗi khi xóa trên Google Sheet: ' + err.message);
-                }
-            }
-        }
-
-        // XÓA TOÀN BỘ
-        async function clearAllData() {
-            if (studentList.length === 0) {
-                alert("Danh sách hiện đang trống!");
-                return;
-            }
-            if (confirm("CẢNH BÁO NGUY HIỂM: Bạn có chắc chắn muốn XÓA TOÀN BỘ dữ liệu trên Google Sheet? Dữ liệu bị xóa sẽ không thể phục hồi!")) {
-                try {
-                    await fetch(GOOGLE_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ action: 'clearAll' })
-                    });
-
-                    studentList = [];
-                    saveAndRefresh();
-                    alert("Đã xóa toàn bộ dữ liệu trên Google Sheet thành công!");
-                } catch (err) {
-                    alert('Lỗi khi xóa dữ liệu trên Google Sheet: ' + err.message);
-                }
-            }
-        }
-
-        function saveAndRefresh() {
-            if (isAdmin) {
-                renderTable();
-                updateStats();
-                updateCharts();
-            }
-        }
-
-        function renderTable() {
-            const tbody = document.getElementById('studentTableBody');
+        function renderBCHTable(list) {
+            const tbody = document.getElementById('bchTableBody');
             if (!tbody) return;
-            if (studentList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 italic">Chưa có dữ liệu sinh viên nào.</td></tr>`;
+            if (!list || list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-slate-400 italic">Chưa có dữ liệu đăng ký.</td></tr>';
                 return;
             }
-            tbody.innerHTML = studentList.map((st, index) => `
-                <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="p-3 font-mono font-semibold text-blue-700">${st.id || ''}</td>
-                    <td class="p-3 font-medium text-slate-900">${st.name || ''}</td>
-                    <td class="p-3 text-slate-600">${st.department || ''}</td>
-                    <td class="p-3">
-                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${st.leadership && st.leadership !== 'Không' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}">
-                            ${st.leadership || 'Không'}
-                        </span>
-                    </td>
-                    <td class="p-3">
-                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-                            ${st.committee || ''}
-                        </span>
-                    </td>
-                    <td class="p-3 text-slate-500 text-xs">${st.email || ''}</td>
-                    <td class="p-3 text-center">
-                        <button onclick="deleteStudent(${index})" title="Xóa sinh viên này" class="w-8 h-8 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-all inline-flex items-center justify-center">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
 
-        function updateStats() {
-            document.getElementById('statTotal').innerText = studentList.length;
-            const leaders = studentList.filter(s => s.leadership && s.leadership !== 'Không').length;
-            document.getElementById('statLeaders').innerText = leaders;
-            const members = studentList.filter(s => !s.leadership || s.leadership === 'Không').length;
-            document.getElementById('statMembers').innerText = members;
-            const ratio = studentList.length ? Math.round((members / studentList.length) * 100) : 0;
-            document.getElementById('statRatio').innerText = ratio + '%';
-        }
+            tbody.innerHTML = list.map((item) => {
+                const id = item.id || item.mssv || '';
+                const name = item.name || item.hoten || '';
+                const dept = item.department || item.khoa || '';
+                const role = item.leadership || item.chucdanh || 'Không';
+                const comm = item.committee || item.phanban || 'Sự kiện';
+                const email = item.email || '';
 
-        function updateCharts() {
-            const leaderCounts = {
-                "Chủ Tịch": studentList.filter(s => s.leadership && s.leadership.includes('Chủ Tịch')).length,
-                "TR.Sự Kiện": studentList.filter(s => s.leadership && s.leadership.includes('Sự Kiện')).length,
-                "TR.Hậu Cần": studentList.filter(s => s.leadership && s.leadership.includes('Hậu Cần')).length,
-                "TR.Truyền Thông": studentList.filter(s => s.leadership && s.leadership.includes('Truyền Thông')).length,
-            };
-
-            if (leadershipChart) leadershipChart.destroy();
-            const ctx1 = document.getElementById('leadershipChart');
-            if (ctx1) {
-                leadershipChart = new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: Object.keys(leaderCounts),
-                        datasets: [{ label: 'Số ứng viên', data: Object.values(leaderCounts), backgroundColor: '#0d47a1', borderRadius: 8 }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false }
-                });
-            }
-
-            const committeeCounts = {
-                "Sự kiện": studentList.filter(s => s.committee === 'Sự kiện').length,
-                "Hậu cần": studentList.filter(s => s.committee === 'Hậu cần').length,
-                "Truyền thông": studentList.filter(s => s.committee === 'Truyền thông').length,
-                "Tự do": studentList.filter(s => s.committee === 'Thành viên tự do').length,
-                "BĐH": studentList.filter(s => s.committee === 'Ban Điều Hành').length,
-            };
-
-            if (committeeChart) committeeChart.destroy();
-            const ctx2 = document.getElementById('committeeChart');
-            if (ctx2) {
-                committeeChart = new Chart(ctx2, {
-                    type: 'doughnut',
-                    data: {
-                        labels: Object.keys(committeeCounts),
-                        datasets: [{ data: Object.values(committeeCounts), backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#64748b'] }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false }
-                });
-            }
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-4 font-bold text-blue-600">${id}</td>
+                        <td class="p-4 font-extrabold text-slate-800 uppercase">${name}</td>
+                        <td class="p-4 text-slate-600 uppercase text-xs font-medium">${dept}</td>
+                        <td class="p-4">
+                            <span class="px-3 py-1 text-xs font-bold rounded-full ${role === 'Chủ Tịch' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}">
+                                ${role}
+                            </span>
+                        </td>
+                        <td class="p-4">
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-600 border border-blue-100">
+                                ${comm}
+                            </span>
+                        </td>
+                        <td class="p-4 text-xs text-slate-500 lowercase">${email}</td>
+                        <td class="p-4 text-center">
+                            <button onclick="deleteBCHRow('${id}')" class="text-red-500 hover:text-red-700 transition-colors p-1">
+                                <i class="fa-regular fa-trash-can text-base"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function handleModeSwitch() {
-            if (isAdmin) {
-                logoutAdmin();
-            } else {
-                toggleAdminModal();
-            }
+            if (isAdmin) logoutAdmin();
+            else toggleAdminModal();
         }
 
         function toggleAdminModal() {
@@ -592,18 +745,14 @@
 
         function handleAdminLogin(e) {
             e.preventDefault();
-            const pass = document.getElementById('adminPassword').value;
-            if (pass === 'admin123') {
+            const pwd = document.getElementById('adminPassword').value;
+            if (pwd === 'admin123' || pwd === 'vsa2026') {
                 isAdmin = true;
-                
-                fetchStudentsFromGoogleSheet();
-
-                document.getElementById('adminArea').classList.remove('hidden');
-                document.getElementById('toggleModeBtn').innerHTML = `<i class="fa-solid fa-user-shield"></i> <span>Chế độ: Quản trị viên</span>`;
-                document.getElementById('toggleModeBtn').className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border flex items-center gap-2 bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200`;
-                
                 toggleAdminModal();
-                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminArea').classList.remove('hidden');
+                document.getElementById('modeText').innerText = 'Chế độ: Admin';
+                fetchBCHData();
+                fetchVoteResults();
             } else {
                 alert('Mật khẩu Admin không chính xác!');
             }
@@ -612,24 +761,32 @@
         function logoutAdmin() {
             isAdmin = false;
             document.getElementById('adminArea').classList.add('hidden');
-            document.getElementById('toggleModeBtn').innerHTML = `<i class="fa-solid fa-user-graduate"></i> <span>Chế độ: Sinh viên</span>`;
-            document.getElementById('toggleModeBtn').className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border flex items-center gap-2 bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100`;
+            document.getElementById('modeText').innerText = 'Chế độ: Sinh viên';
         }
 
-        function exportCSV() {
-            if (studentList.length === 0) {
-                alert("Không có dữ liệu để xuất CSV!");
-                return;
+        function handleRoleChange() {
+            const role = document.getElementById('candRole').value;
+            const container = document.getElementById('committeeContainer');
+            const note = document.getElementById('committeeLockNote');
+            const radios = document.getElementsByName('candCommittee');
+
+            if (role !== "Không") {
+                container.classList.add('opacity-50', 'pointer-events-none');
+                note.innerText = "(đã khóa do đăng ký vị trí Lãnh đạo)";
+                let targetValue = "Thành viên tự do";
+                if (role === "Trưởng Phân Ban Truyền Thông") targetValue = "Truyền thông";
+                else if (role === "Trưởng Phân Ban Sự Kiện") targetValue = "Sự kiện";
+                else if (role === "Trưởng Phân Ban Hậu Cần") targetValue = "Hậu cần";
+
+                radios.forEach(radio => {
+                    radio.disabled = true;
+                    if (radio.value === targetValue) radio.checked = true;
+                });
+            } else {
+                container.classList.remove('opacity-50', 'pointer-events-none');
+                note.innerText = "";
+                radios.forEach(radio => radio.disabled = false);
             }
-            let csv = 'MSSV,Họ và Tên,Khoa Ngành,Chức Danh Lãnh Đạo,Phân Ban,Email\n';
-            studentList.forEach(s => {
-                csv += `"${s.id || ''}","${s.name || ''}","${s.department || ''}","${s.leadership || ''}","${s.committee || ''}","${s.email || ''}"\n`;
-            });
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'Danh_Sach_BCH_VSA_NKUST.csv';
-            link.click();
         }
     </script>
 </body>
